@@ -1,0 +1,77 @@
+@use "./vendors";
+@import url("./vendors/material-icon-round.css");
+/* ========================
+INCLUDE STYLES AND COMPONENTS
+===================== */
+
+// 1. Abstracts
+@import
+  'abstracts/import-vendors',
+  'abstracts/mixins',
+  'abstracts/variables';  
+
+// 2. Base stuff
+@import
+  'base/helpers',
+  'base/typography';
+
+// 3. Components
+@import
+  'components/navigation',
+  'components/buttons',
+  'components/forms',
+  'components/elements',
+  'components/items',
+  'components/lists';
+
+// 4. Layout
+@import
+'layout/spacing',
+'layout/layout',
+'layout/layout-dark',
+'layout/responsive';
+.main-header .col-nav {
+  display: flex;
+  align-items: center;
+}
+.alert-warning {
+  color: #98530c;
+  background-color: #ffe8d0;
+  border-color: #fedcb9;
+}
+.alert-success {
+  color: #006d0e;
+  background-color: #ccf0d1;
+  border-color: #b3e9b9;
+}
+.alert-danger {
+  color: #920000;
+  background-color: #fdcccc;
+  border-color: #fbb3b3;
+}
+.card-header:first-child {
+  border-radius: 0.25rem 0.25rem 0 0;
+}
+.card-header {
+  padding: 1.3rem 1.3rem;
+  margin-bottom: 0;
+  background-color: #fff;
+  border-bottom: 1px solid rgba(222, 226, 230, 0.7);
+}
+.table {
+  --bs-table-bg: transparent;
+  --bs-table-striped-color: #141432;
+  --bs-table-striped-bg: rgba(0, 0, 0, 0.05);
+  --bs-table-active-color: #141432;
+  --bs-table-active-bg: rgba(0, 0, 0, 0.1);
+  --bs-table-hover-color: #141432;
+  --bs-table-hover-bg: rgba(49, 103, 235, 0.075);
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #141432;
+  vertical-align: middle;
+  border-color: rgba(108, 117, 125, 0.25);
+}
+.table > :not(caption) > * > * {
+  padding: 0.8rem 0.4rem;
+}

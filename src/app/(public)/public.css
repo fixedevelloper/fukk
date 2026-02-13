@@ -1,0 +1,11 @@
+@import '../../styles/front/style.scss';
+
+.swiper-button-prev .swiper-navigation-icon {
+    transform: rotate(180deg);
+    display: none !important;
+}
+
+.swiper-button-next .swiper-navigation-icon {
+    transform: rotate(180deg);
+    display: none !important;
+}

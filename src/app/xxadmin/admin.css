@@ -1,0 +1,13 @@
+@import '../../styles/admin/style.scss';
+.main-header .col-nav {
+    display: flex;
+    align-items: center;
+}
+.main-header .nav-item > button {
+    color: #6c757d;
+    display: block;
+    text-decoration: none;
+    position: relative;
+    padding: 0 10px;
+}
+
