@@ -4,15 +4,14 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Navigation, Thumbs ,Grid} from "swiper/modules";
-import {Banner} from "../../../types/FrontType";
+import {Image as ProductImage} from "../../../types/FrontType";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 
 
-
 type Props = {
-    images?: Banner[];
+    images?: ProductImage[];
 };
 
 export default function ProductGalleryVertical({ images = [] }: Props) {
@@ -41,12 +40,12 @@ export default function ProductGalleryVertical({ images = [] }: Props) {
                 <div className="detail-gallery">
                     <label className="label">-17%</label>
                     <div className="product-image-slider-2">
-                {images.map((img:Banner) => (
+                {images.map((img:ProductImage) => (
                     <SwiperSlide key={img.id}>
                         <div className="image-zoom-wrapper">
                             <Image
-                                src={img.image?.thumb || '/images/default.png'}
-                                alt={img.image?.alt || 'Product'}
+                                src={img.thumb || '/images/default.png'}
+                                alt={img.alt || 'product'}
                                 width={457}
                                 height={457}
                                 unoptimized
@@ -74,7 +73,7 @@ export default function ProductGalleryVertical({ images = [] }: Props) {
                     <div className="item-thumb">
                         <SwiperSlide key={img.id}>
                         <Image
-                            src={img.image?.thumb || '/images/default.png'}
+                            src={img.thumb || img.src}
                             alt="thumbnail"
                             width={190}
                             height={90}

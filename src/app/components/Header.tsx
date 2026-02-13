@@ -101,10 +101,10 @@ export default function Header () {
                                         <li><Link href="/shop/type/best-seller">Meilleures ventes</Link></li>
                                     </ul>
                                 </nav>
-                                <div class="burger-icon burger-icon-white"  onClick={() => setMobileOpen(true)}>
-                                    <span class="burger-icon-top"/>
-                                    <span class="burger-icon-mid"/>
-                                    <span class="burger-icon-bottom"/>
+                                <div className="burger-icon burger-icon-white"  onClick={() => setMobileOpen(true)}>
+                                    <span className="burger-icon-top"/>
+                                    <span className="burger-icon-mid"/>
+                                    <span className="burger-icon-bottom"/>
                                 </div>
 
                             </div>

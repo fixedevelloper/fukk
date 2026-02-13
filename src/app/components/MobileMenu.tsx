@@ -40,15 +40,15 @@ export default function MobileMenu({
                     </Link>
                 </div>
 
-                <div class="burger-icon burger-icon-white burger-close"  onClick={() => setMobileOpen(false)}>
-                    <span class="burger-icon-top">
-                    </span><span class="burger-icon-mid"/>
-                    <span class="burger-icon-bottom"/>
+                <div className="burger-icon burger-icon-white burger-close"  onClick={() => setMobileOpen(false)}>
+                    <span className="burger-icon-top">
+                    </span><span className="burger-icon-mid"/>
+                    <span className="burger-icon-bottom"/>
                 </div>
             </div>
                 <div className="mobile-menu-wrap mobile-header-border">
             <nav className="mobile-nav mt-15" >
-                <ul class='mobile-menu font-heading'>
+                <ul className='mobile-menu font-heading'>
                     {categories.map((cat) => (
                         <li
                             key={cat.id}
@@ -64,7 +64,8 @@ export default function MobileMenu({
                                 <span className="arrow" />
                             </button>
 
-                            {cat.children?.length > 0 && (
+                            {cat.children && cat.children.length > 0 && (
+
                                 <ul
                                     className={`sub-menu ${
                                         openSub === cat.slug ? "active" : ""

@@ -246,7 +246,9 @@ export type ResponsePaginate<T> = {
     massage: string
     data: T[]
     meta:{
+        current_page:number
         last_page:number
+        total:number
     }
 }
 type AttributeItem = {

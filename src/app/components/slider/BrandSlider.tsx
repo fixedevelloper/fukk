@@ -27,7 +27,7 @@ export default function BrandSlider() {
         <div className="section-box">
             <div className="container">
                 <div className="list-brands list-none-border">
-                    <div class='box-swiper'>
+                    <div className='box-swiper'>
                         <Swiper
                             modules={[Navigation, Pagination, Autoplay]}
                             spaceBetween={20}

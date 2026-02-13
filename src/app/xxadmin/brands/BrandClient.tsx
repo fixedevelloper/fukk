@@ -2,8 +2,12 @@
 
 import { createBrand, updateBrand, deleteBrand } from "./actions"
 import { useTransition } from "react"
+import {Brand} from "../../../types/FrontType";
 
-export default function BrandClient({ brands }) {
+type Props = {
+    brands?: Brand[];
+};
+export default function BrandClient({ brands = [] }: Props) {
     const [isPending, startTransition] = useTransition()
 
     return (
@@ -13,7 +17,7 @@ export default function BrandClient({ brands }) {
             </div>
 
             <div className="row">
-                {brands.map((brand) => (
+                {brands?.map((brand:Brand) => (
                     <div key={brand.id} className="col-xl-2 col-lg-3 col-md-4 col-6">
                         <div className="card text-center p-3">
 

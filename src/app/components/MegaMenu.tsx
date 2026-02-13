@@ -30,7 +30,8 @@ export default function MegaMenu({ categories }: MegaMenuProps) {
                             <span>{cat.name}</span>
                         </Link>
 
-                        {cat.children?.length > 0 && (
+                        {cat.children && cat.children.length > 0 && (
+
                             <div className="mega-dropdown">
                                 <div className="mega-content">
 
@@ -63,7 +64,7 @@ export default function MegaMenu({ categories }: MegaMenuProps) {
 
                                     <div className="mega-banner">
                                         <Image
-                                            src={cat.image?.url ?? "/promo.jpg"}
+                                            src={cat.image?.thumb ?? "/promo.jpg"}
                                             alt={cat.name}
                                             width={300}
                                             height={250}

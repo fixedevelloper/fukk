@@ -149,7 +149,7 @@ export default function EditSliderPage() {
                 <div className="mb-4">
                     <label className="form-label">Image</label>
                     <CategoryMediaCard
-                        selectedImage={image}
+                        selectedImage={image ?? undefined}
                         onChange={setImage}
                     />
                 </div>

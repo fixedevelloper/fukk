@@ -145,10 +145,10 @@ export function SliderCard() {
                             {slider.is_active && (
                                 <div
                                     className={`badge ${
-                                        slider.is_active == 0 ? "bg-success" : "bg-secondary"
+                                        slider.is_active ? "bg-success" : "bg-secondary"
                                     } mt-1`}
                                 >
-                                    {slider.is_active ==0 ? "Actif" : "Désactivé"}
+                                    {slider.is_active ? "Actif" : "Désactivé"}
                                 </div>
                             )}
                         </div>

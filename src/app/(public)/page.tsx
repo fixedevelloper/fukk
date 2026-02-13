@@ -63,7 +63,7 @@ export const metadata: Metadata = {
   },
 };
 
-async function getSliders(): Promise<unknown> {
+async function getSliders(): Promise<ResponsePaginate<Slider> | null> {
   try {
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/app-sliders?type=home_slider`,
@@ -72,12 +72,13 @@ async function getSliders(): Promise<unknown> {
 
     if (!res.ok) return null;
 
-    return await res.json();
+    return await res.json() as ResponsePaginate<Slider>;
   } catch (error) {
     console.error("Failed to fetch sliders:", error);
     return null;
   }
 }
+
 
 async function getBannerCategories(): Promise<Category[]> {
   const res = await fetch(

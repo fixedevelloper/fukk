@@ -78,7 +78,15 @@ export const useCartStore = create(
             removeItem: (id: number) => {
                 set({ items: get().items.filter(i => i.id !== id) });
             },
-
+            updateQuantity: (id: number, quantity: number) => {
+                if (quantity <= 0) {
+                    set({ items: get().items.filter(i => i.id !== id) });
+                } else {
+                    set({
+                        items: get().items.map(i => i.id === id ? { ...i, quantity } : i),
+                    });
+                }
+            },
             clearCart: () => set({ items: [] }),
 
             toggleOpen: () => set({ open: !get().open }),

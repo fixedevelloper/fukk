@@ -89,14 +89,14 @@ export default function ShopCart() {
                                                             <a href={`/shop/product-show/${item.slug}`}>
                                                                 <h6 className="color-brand-3">{item.name}</h6>
                                                             </a>
-                                                       {/*     <div class="rating">
+                                                       {/*     <div className="rating">
                                                                 {item.reviews === 0 ? (
                                                                     <p className="text-center py-5">Pas de reviews</p>
                                                                 ) : (
 
                                                                 <img src="/images/template/icons/star.svg" alt="Ecom"/>
                                                                     )}
-                                                                    <span class="font-xs color-gray-500"> ({item.reviews})</span>
+                                                                    <span className="font-xs color-gray-500"> ({item.reviews})</span>
 
                                                             </div>*/}
                                                         </div>

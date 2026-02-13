@@ -69,7 +69,7 @@ export default async function ProductShowPage({
 
 
      if (!product) {
-      //  notFound(); // 👉 déclenche la page 404
+        notFound(); // 👉 déclenche la page 404
     }
 
     return <ProductShow product={product} />;
