@@ -42,7 +42,7 @@ export default function ProductAdd() {
 
     // Fetch categories + attributes
     useEffect(() => {
-        axiosServices.get("/api/categories").then(res => setCategories(res.data.data));
+        axiosServices.get("/api/admin-categories-parents").then(res => setCategories(res.data.data));
         axiosServices.get("/api/attributes").then(res => setAttributes(res.data.data));
     }, []);
 
@@ -67,7 +67,7 @@ export default function ProductAdd() {
 
         setLoading(true);
         try {
-            await axiosServices.post("/api/products", {
+            await axiosServices.post("/api/admin-products", {
                 ...product,
                 status,
                 image_id: product.image_id,

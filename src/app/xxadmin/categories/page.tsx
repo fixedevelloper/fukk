@@ -5,6 +5,7 @@ import {Category, Image} from "../../../types/FrontType";
 import axiosServices from "../../../lib/axios";
 import CategoryRow from "../components/CategoryRow";
 import {CategoryMediaCard} from "../components/CategoryMediaCard";
+import Pagination from "../components/Pagination";
 
 
 
@@ -18,8 +19,15 @@ interface CategoryForm {
 
 export default function CategoriePage() {
     const [categories, setCategories] = useState<Category[]>([]);
+    const [categorieParents, setCategoryParents] = useState<Category[]>([]);
     const [loading, setLoading] = useState(false);
+    const [search, setSearch] = useState("");
+    const [limit, setLimit] = useState(10);
+    const [currentPage, setCurrentPage] = useState(1)
+    const [lastPage, setLastPage] = useState(1)
     const [editingCategory, setEditingCategory] = useState<Category | null>(null);
+    const [selectedImage, setSelectedImage] = useState<Image | null>(null);
+
     const [form, setForm] = useState<CategoryForm>({
         name: "",
         slug: "",
@@ -29,18 +37,35 @@ export default function CategoriePage() {
     });
 
     /** Fetch categories */
-    const fetchCategories = async () => {
+    const fetchCategorieParents = async () => {
         try {
-            const res = await axiosServices.get("/api/categories");
-            setCategories(res.data.data);
+            const resParents = await axiosServices.get("/api/admin-categories-parents");
+            console.log(resParents.data)
+            setCategoryParents(resParents.data.data)
         } catch (err) {
             console.error(err);
         }
     };
+    const fetchCategories = async (page = 1) => {
+        setLoading(true);
+        try {
+            const res = await axiosServices.get(`api/admin-categories?page=${page}`, {
+                params: { search, limit },
+            });
+            setCategories(res.data.data);
+            setCurrentPage(res.data.meta.current_page);
+            setLastPage(res.data.meta.last_page);
 
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    };
     useEffect(() => {
         fetchCategories();
-    }, []);
+        fetchCategorieParents();
+    }, [search, limit]);
 
     /** Submit create / update */
     const handleSubmit = async (e: React.FormEvent) => {
@@ -57,10 +82,10 @@ export default function CategoriePage() {
             };
 
             if (editingCategory) {
-                await axiosServices.put(`/api/categories/${editingCategory.id}`, payload);
+                await axiosServices.put(`/api/admin-categories/${editingCategory.id}`, payload);
                 alert("Catégorie mise à jour !");
             } else {
-                await axiosServices.post("/api/categories", payload);
+                await axiosServices.post("/api/admin-categories", payload);
                 alert("Catégorie créée !");
             }
 
@@ -87,7 +112,7 @@ export default function CategoriePage() {
     };
 
     /** Edit category */
-    const handleEditClick = (cat: Category) => {
+    const handleEditClick = async (cat: Category) => {
         setEditingCategory(cat);
         setForm({
             name: cat.name,
@@ -96,6 +121,11 @@ export default function CategoriePage() {
             description: cat.description || "",
             image_id: cat.image?.id ?? null,
         });
+        if (cat.image) {
+            setSelectedImage(cat.image);
+        } else {
+            setSelectedImage(null);
+        }
     };
 
     /** Delete category */
@@ -162,7 +192,7 @@ export default function CategoriePage() {
                                         }
                                     >
                                         <option value="">-- Aucun --</option>
-                                        {categories
+                                        {categorieParents
                                             .filter((c) => !editingCategory || c.id !== editingCategory.id)
                                             .map((cat) => (
                                                 <option key={cat.id} value={cat.id}>
@@ -185,15 +215,16 @@ export default function CategoriePage() {
 
                                 {/* Image */}
                                 <CategoryMediaCard
-                                    selectedImage={
-                                        form.image_id
-                                            ? categories.find((b) => b.image?.id === form.image_id)?.image
-                                            : undefined
-                                    }
-                                    onChange={(image: Image | null) =>
-                                        setForm({ ...form, image_id: image?.id ?? null })
-                                    }
+                                    selectedImage={selectedImage??undefined}
+                                    onChange={(image) => {
+                                        setSelectedImage(image);
+                                        setForm(prev => ({
+                                            ...prev,
+                                            image_id: image?.id ?? null
+                                        }));
+                                    }}
                                 />
+
 
                                 <div className="d-grid mt-2">
                                     <button
@@ -243,6 +274,11 @@ export default function CategoriePage() {
                                     </tbody>
                                 </table>
                             </div>
+                            <Pagination
+                                currentPage={currentPage}
+                                lastPage={lastPage}
+                                onPageChange={(page) => fetchCategories(page)}
+                            />
                         </div>
                     </div>
                 </div>

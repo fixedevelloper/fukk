@@ -1,3 +1,5 @@
+import React from "react";
+
 type PaginationProps = {
     currentPage: number
     lastPage: number
@@ -9,21 +11,43 @@ export default function Pagination({
                                        lastPage,
                                        onPageChange,
                                    }: PaginationProps) {
+
     if (lastPage <= 1) return null
 
-    const pages = []
+    const handleChange = (page: number) => {
+        if (page < 1 || page > lastPage) return
+        if (page === currentPage) return
+        onPageChange(page)
+    }
 
-    for (let i = 1; i <= lastPage; i++) {
-        if (
-            i === 1 ||
-            i === lastPage ||
-            (i >= currentPage - 1 && i <= currentPage + 1)
-        ) {
-            pages.push(i)
-        } else if (pages[pages.length - 1] !== '...') {
+    const getPages = () => {
+        const pages: (number | string)[] = []
+
+        const start = Math.max(2, currentPage - 1)
+        const end = Math.min(lastPage - 1, currentPage + 1)
+
+        pages.push(1)
+
+        if (start > 2) {
             pages.push('...')
         }
+
+        for (let i = start; i <= end; i++) {
+            pages.push(i)
+        }
+
+        if (end < lastPage - 1) {
+            pages.push('...')
+        }
+
+        if (lastPage > 1) {
+            pages.push(lastPage)
+        }
+
+        return pages
     }
+
+    const pages = getPages()
 
     return (
         <div className="pagination-area mt-15 mb-50">
@@ -34,7 +58,8 @@ export default function Pagination({
                     <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
                         <button
                             className="page-link"
-                            onClick={() => onPageChange(currentPage - 1)}
+                            onClick={() => handleChange(currentPage - 1)}
+                            disabled={currentPage === 1}
                         >
                             <i className="material-icons md-chevron_left" />
                         </button>
@@ -42,21 +67,23 @@ export default function Pagination({
 
                     {pages.map((page, index) =>
                         page === '...' ? (
-                            <li key={index} className="page-item">
+                            <li key={`dot-${index}`} className="page-item">
                                 <span className="page-link dot">...</span>
                             </li>
                         ) : (
                             <li
-                                key={index}
+                                key={page}
                                 className={`page-item ${
                                     currentPage === page ? 'active' : ''
                                 }`}
                             >
                                 <button
                                     className="page-link"
-                                    onClick={() => onPageChange(page as number)}
+                                    onClick={() => typeof page === "number" && handleChange(page)}
+
                                 >
-                                    {String(page).padStart(2, '0')}
+                                    {page}
+                                 {/*   {String(page).padStart(2, '0')}*/}
                                 </button>
                             </li>
                         )
@@ -70,7 +97,8 @@ export default function Pagination({
                     >
                         <button
                             className="page-link"
-                            onClick={() => onPageChange(currentPage + 1)}
+                            onClick={() => handleChange(currentPage + 1)}
+                            disabled={currentPage === lastPage}
                         >
                             <i className="material-icons md-chevron_right" />
                         </button>

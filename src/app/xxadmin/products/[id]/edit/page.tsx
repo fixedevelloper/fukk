@@ -79,7 +79,7 @@ export default function ProductForm() {
         const fetchData = async () => {
             try {
                 const [catRes, attrRes] = await Promise.all([
-                    axiosServices.get("/api/categories"),
+                    axiosServices.get("/api/admin-categories-parents"),
                     axiosServices.get("/api/attributes"),
                 ]);
 
@@ -87,7 +87,7 @@ export default function ProductForm() {
                 setAttributes(attrRes.data.data);
 
                 if (id) {
-                    const prodRes = await axiosServices.get(`/api/products/${id}`);
+                    const prodRes = await axiosServices.get(`/api/admin-products/${id}`);
                     const prod = prodRes.data;
                     setProduct({
                         ...product,
@@ -131,13 +131,13 @@ export default function ProductForm() {
 
         try {
             if (id) {
-                await axiosServices.put(`/api/products/${id}`, { ...product, status });
+                await axiosServices.put(`/api/admin-products/${id}`, { ...product, status });
                 alert("Produit mis à jour !");
             } else {
-                await axiosServices.post("/api/products", { ...product, status });
+                await axiosServices.post("/api/admin-products", { ...product, status });
                 alert("Produit ajouté !");
             }
-            router.push("/xxadmin/products");
+            router.push("/xxadmin/products/list");
         } catch (e) {
             console.error(e);
             alert("Erreur lors de l'enregistrement");

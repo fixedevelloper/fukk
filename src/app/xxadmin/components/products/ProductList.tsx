@@ -1,19 +1,38 @@
 "use client"
 
 import {Product, ResponsePaginate} from "../../../../types/FrontType";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {ProductArticle} from "./ProductArticle";
+import axiosServices from "../../../../lib/axios";
+import Pagination from "../Pagination";
 
 export function ProductCard() {
+    const [loading, setLoading] = useState(false);
+    const [search, setSearch] = useState("");
+    const [limit, setLimit] = useState(10);
+    const [currentPage, setCurrentPage] = useState(1)
+    const [lastPage, setLastPage] = useState(1)
     const [products, setProducts] = useState<Product[]>([])
+    const fetchProducts = async (page = 1) => {
+        setLoading(true);
+        try {
+            const res = await axiosServices.get(`api/admin-products?page=${page}`, {
+                params: { search, limit },
+            });
+            setProducts(res.data.data);
+            setCurrentPage(res.data.meta.current_page);
+            setLastPage(res.data.meta.last_page);
 
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products`)
-            .then((res:Response) => res.json())
-            .then((data: ResponsePaginate<Product>) => setProducts(data.data))
-            .catch((err) => console.error(err))
-    }, [])
+     fetchProducts()
+    }, [search, limit])
     return(
         <div className="card mb-4">
             <header className="card-header">
@@ -50,6 +69,14 @@ export function ProductCard() {
                   <ProductArticle product={product} />
                 ))}
             </div>
+            <div className="card-footer">
+                <Pagination
+                    currentPage={currentPage}
+                    lastPage={lastPage}
+                    onPageChange={(page) => fetchProducts(page)}
+                />
+            </div>
+
         </div>
     )
 }

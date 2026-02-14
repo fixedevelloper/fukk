@@ -23,7 +23,7 @@ export default function HomeSlider({sliders}: { sliders: Slider[] }) {
                 className="swiper-group-1"
             >
                 {sliders.map((slide: Slider) => {
-                    const imageUrl = slide.image?.src ?? "/images/default-banner.jpg";
+                    const imageUrl = slide.image?.medium ?? "/images/default-banner.jpg";
                     return (
                         <SwiperSlide key={slide.id}>
                             <div

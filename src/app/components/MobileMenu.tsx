@@ -117,7 +117,7 @@ export default function MobileMenu({
                             <ul className="mobile-menu">
                                 <li><Link href="/account">Mon compte</Link></li>
                                 <li><Link href="/account?tab=orders">Mes commandes</Link></li>
-                                <li><Link href="/wishlist">Ma liste de souhaits</Link></li>
+                                <li><Link href="/shop/shop-wishlist">Ma liste de souhaits</Link></li>
                                 <li><Link href="/account?tab=settings">Paramètres</Link></li>
                                 <li>
                                     <button

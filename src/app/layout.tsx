@@ -18,6 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={``} id='modal-ts'>
+
       <AppProvidersWrapper>
         {children}
       </AppProvidersWrapper>

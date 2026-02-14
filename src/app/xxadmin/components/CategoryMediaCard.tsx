@@ -50,6 +50,7 @@ export function CategoryMediaCard({ selectedImage, onChange }: Props) {
 
     const handleSelectImage = (image: Image) => {
         onChange?.(image);
+        selectedImage=image
         setShowModal(false);
     };
 
@@ -82,12 +83,6 @@ export function CategoryMediaCard({ selectedImage, onChange }: Props) {
 
     return (
         <div className="mb-4">
-            <button type='button'
-                className="btn btn-sm btn-primary mb-2"
-                onClick={() => setShowModal(true)}
-            >
-                Select / Add Image
-            </button>
 
             {selectedImage && (
                 <div className="position-relative d-inline-block">
@@ -104,6 +99,18 @@ export function CategoryMediaCard({ selectedImage, onChange }: Props) {
                     </button>
                 </div>
             )}
+            <div className="row container">
+                <button type='button'
+                        className="btn btn-sm btn-primary mb-2"
+                        onClick={() => setShowModal(true)
+                        }
+                >
+                    Select / Add Image
+                </button>
+            </div>
+
+
+
 
             <Modal
                 isOpen={showModal}

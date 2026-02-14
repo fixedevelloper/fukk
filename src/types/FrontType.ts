@@ -40,6 +40,7 @@ export type Image = {
     src: string
     alt?: string
     thumb?:string
+    medium?:string
 }
 
 // ================= BRAND =================
