@@ -4,7 +4,6 @@ import {useEffect, useState} from "react";
 import Link from "next/link";
 import {useRouter, useSearchParams} from "next/navigation";
 import {useFiltersStore} from "../../../store/filters.store";
-import clsx from "clsx";
 import {Category} from "../../../types/FrontType";
 
 
@@ -48,23 +47,23 @@ export default function ShopProductCategories() {
     }, []);
 
     /* 🔄 Sync URL -> Store */
+
     useEffect(() => {
         const urlCategory = searchParams.get("category");
-        if (urlCategory !== category) {
-            setCategory(urlCategory);
-        }
-    }, [searchParams, category, setCategory]);
+        setCategory(urlCategory);
+    }, [searchParams]);
 
     const handleSelect = (slug: string) => {
         setCategory(slug);
-        router.push(`/shop?category=${slug}`, { scroll: false });
+        router.replace(`/shop?category=${slug}`, { scroll: false });
+
     };
 
     const renderCategory = (cat: Category) => (
         <li key={cat.id}>
             <Link
                 href={`/shop?category=${cat.slug}`}
-                //onClick={() => handleSelect(cat.slug)}
+               // onClick={() => handleSelect(cat.slug)}
                 className="block"
             >
                 {cat.name}

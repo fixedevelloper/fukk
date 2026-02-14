@@ -2,6 +2,7 @@
 import React, { useCallback } from "react";
 import ShopProductCategories from "./ProductCategory";
 import {useFiltersStore} from "../../../store/filters.store";
+import { Suspense } from "react";
 
 /* =======================
    Constants
@@ -50,8 +51,9 @@ export default function ShopFilters() {
     return (
         <>
             {/* Categories */}
+            <Suspense fallback={<div>Loading...</div>}>
             <ShopProductCategories />
-
+            </Suspense>
             {/* Filters */}
             <div className="sidebar-border mb-40">
                 <div className="sidebar-head">

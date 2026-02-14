@@ -14,6 +14,7 @@ import { Suspense } from "react";
 import {ResponsePaginate, Slider} from "../../types/FrontType";
 
 import type { Metadata } from "next";
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: {

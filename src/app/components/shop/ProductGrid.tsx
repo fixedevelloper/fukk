@@ -6,8 +6,6 @@ import {useFiltersStore} from "../../../store/filters.store";
 import {usePaginationStore} from "../../../store/pagination.store";
 import {Product, ResponsePaginate, Tab} from "../../../types/FrontType";
 
-
-
 function ProductGrid() {
     const filters = useFiltersStore();
     const { page, perPage, setTotalPages } = usePaginationStore();
