@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react"
 import Image from "next/image"
-import favicon from "@/styles/front/imgs/template/favicon.svg";
 export default function Preloader() {
     const [loading, setLoading] = useState(true)
 
@@ -21,8 +20,8 @@ export default function Preloader() {
                     <div className="text-center">
                         <Image
                             className="mb-10"
-                            src={favicon}
-                            alt="Ecom"
+                            src='/images/theme/favicon.svg'
+                            alt="FinduKarko"
                             width={50}
                             height={50}
                         />

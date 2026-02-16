@@ -18,11 +18,11 @@ const BRANDS = [
 ];
 
 const PRICES = [
-    "$0 - $100",
-    "$100 - $300",
-    "$300 - $500",
-    "$500 - $1000",
-    "$1000+",
+    "0 - 10000",
+    "10000- 30000",
+    "30000 - 50000",
+    "50000 - 100000",
+    "100000+",
 ];
 
 /* =======================
@@ -62,7 +62,7 @@ export default function ShopFilters() {
 
                 <div className="sidebar-content">
                     {/* Brands */}
-                    <FilterBlock title="Brands">
+        {/*            <FilterBlock title="Brands">
                         {BRANDS.map((brand) => (
                             <Checkbox
                                 key={brand}
@@ -71,7 +71,7 @@ export default function ShopFilters() {
                                 onChange={() => handleToggleBrand(brand)}
                             />
                         ))}
-                    </FilterBlock>
+                    </FilterBlock>*/}
 
                     {/* Price */}
                     <FilterBlock title="Price">

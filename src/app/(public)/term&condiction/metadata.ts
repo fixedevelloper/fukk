@@ -9,7 +9,7 @@ export const metadata: Metadata = {
         "conditions générales",
         "politique de confidentialité",
         "ecommerce",
-        "ecom",
+        "FinduKarko",
         "données personnelles",
         "cookies",
     ],
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
         description:
             "Découvrez les règles, droits et obligations liés à l’utilisation de la plateforme FinKarko.",
         url: `${process.env.NEXT_PUBLIC_SITE_URL}/terms-and-conditions`,
-        siteName: "Ecom",
+        siteName: "FinduKarko",
         locale: "fr_FR",
         type: "article",
     },

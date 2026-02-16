@@ -78,11 +78,11 @@ export default function Footer() {
                                     Téléchargez nos applications et obtenez 15% de réduction supplémentaire sur votre première commande !
                                 </p>
                                 <div className="mt-20">
-                                    <a className="mr-10" href="#"><img src="/images/template/appstore.png" alt="Ecom"/></a>
-                                    <a href="#"><img src="/images/template/google-play.png" alt="Ecom"/></a>
+                                    <a className="mr-10" href="#"><img src="/images/template/appstore.png" alt="FinduKarko"/></a>
+                                    <a href="#"><img src="/images/template/google-play.png" alt="FinduKarko"/></a>
                                 </div>
                                 <p className="font-md color-gray-900 mt-20 mb-10">Passerelles de paiement sécurisées</p>
-                                <img src="/images/template/payment-method.png" alt="Ecom"/>
+                                <img src="/images/template/payment-method.png" alt="FinduKarko"/>
                             </div>
                         </div>
                     </div>

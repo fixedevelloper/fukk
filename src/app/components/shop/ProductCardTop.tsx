@@ -53,11 +53,11 @@ export default function ProductCardTop({ product }: Props) {
 
                     <div className="price-info">
                         <strong className="font-lg-bold color-brand-3 price-main">
-                            ${product.price ?? 0}
+                            ${product.price ?? 0} FCFA
                         </strong>
                         {product.sale_price && (
                             <span className="color-gray-500 price-line">
-                                ${product.sale_price}
+                                ${product.sale_price} FCFA
                             </span>
                         )}
                     </div>

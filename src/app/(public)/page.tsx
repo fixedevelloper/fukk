@@ -112,28 +112,22 @@ export default async function Home() {
                   <div className="row">
                     <div className="col-xl-7 col-lg-9 col-md-8 col-sm-12 mb-30">
                       <div className="bg-metaverse bg-22 pt-25 mb-20 pl-20 h-175"   style={{
-                        backgroundImage: `url(/images/homepage4/metaverse.png)`,
+                        backgroundImage: `url(/images/homepage4/promo/Strategies.gif)`,
                         backgroundRepeat: 'no-repeat',
-                        backgroundPosition: 'bottom right',
-                        backgroundSize: 'auto 80%'
+                        backgroundPosition: 'center',
+                        backgroundSize: '100%'
                       }}>
-                        <h3 className="mb-10 font-32">Casques Rockez 547</h3>
-                        <p className="font-16">Écoutez partout, vibrez partout</p>
-                        <div className="mt-10"><Link className="btn btn-link-brand-2 btn-arrow-brand-2" href="/shop">Voir plus</Link></div>
+
                       </div>
-                      <div className="bg-4 box-bdrd-4 bg-headphone pt-20 mh-307"
+                      <Link className="" href="/shop"> <div className="bg-4 box-bdrd-4 bg-headphone pt-20 mh-307"
                            style={{
-                             backgroundImage: `url(/images/homepage4/headphone.png)`,
+                             backgroundImage: `url(/images/homepage4/promo/NOUVEAUTES.gif)`,
                              backgroundRepeat: 'no-repeat',
-                             backgroundPosition: 'bottom right',
-                             backgroundSize: 'auto 80%'
-                           }}><span
-                          className="font-md color-brand-3">Électronique et gadgets innovants</span>
-                        <h4 className="font-32 color-gray-1000 mb-10 mt-5">Tendances 2026</h4>
-                        <p className="color-brand-1 font-sm">Nouveautés du mois<br className="d-none d-lg-block"/> – À ne pas manquer
-                        </p>
-                        <div className="mt-35"><Link className="btn btn-brand-2 btn-arrow-right" href="/shop">J'achete maintenant</Link></div>
-                      </div>
+                             backgroundPosition: 'center',
+                             backgroundSize: '100%'
+                           }}>
+
+                      </div></Link>
                     </div>
                     <div className="col-xl-5 col-lg-3 col-md-4 col-sm-12">
                       <div className="box-promotions">

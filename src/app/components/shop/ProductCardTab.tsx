@@ -49,7 +49,7 @@ export default function ProductCardTab({ product }: Props) {
                     <Link href={'/shop/product-show/'+product.slug}>
                         <h6 className="color-brand-3">{product.name}</h6>
                     </Link>
-                    <strong className="price-main">{product.price} €</strong>
+                    <strong className="price-main">{product.price} FCFA</strong>
 
                     <div className="mt-20">
                         <button

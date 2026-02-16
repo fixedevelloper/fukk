@@ -129,6 +129,12 @@ const adminMenuItems: ItemMenu[] = [
         href: "/xxadmin/banners/list",
         roles: ["super_admin"],
     },
+    {
+        name: "Villes",
+        icon: "md-map",
+        href: "/xxadmin/cities/list",
+        roles: ["super_admin"],
+    },
 ];
 
 type ItemMenu = {

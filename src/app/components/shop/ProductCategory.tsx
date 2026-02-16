@@ -75,7 +75,7 @@ export default function ShopProductCategories() {
     return (
         <div className="sidebar-border mb-0">
             <div className="sidebar-head">
-                <h6 className="color-gray-900">Product Categories</h6>
+                <h6 className="color-gray-900">Catégories de produits</h6>
             </div>
 
             <div className="sidebar-content">

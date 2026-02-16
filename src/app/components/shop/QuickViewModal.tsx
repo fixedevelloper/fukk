@@ -105,7 +105,7 @@ export default function QuickViewModal() {
 
                         {/* Note du produit */}
                         <div className="rating d-inline-block">
-                            <Image src={star} alt="Ecom" />
+                            <Image src={star} alt="FinduKarko" />
                             <span className="font-xs color-gray-500 font-medium"> (65 avis)</span>
                         </div>
                     </div>
@@ -114,9 +114,9 @@ export default function QuickViewModal() {
 
                     {/* Prix */}
                     <div className="box-product-price">
-                        <h3 className="color-brand-3 price-main d-inline-block mr-10">{product.price}</h3>
+                        <h3 className="color-brand-3 price-main d-inline-block mr-10">{product.price} FCFA</h3>
                         {product.oldPrice && (
-                            <span className="color-gray-500 price-line font-xl line-througt">{product.oldPrice}</span>
+                            <span className="color-gray-500 price-line font-xl line-througt">{product.oldPrice} FCFA</span>
                         )}
                     </div>
 
@@ -191,8 +191,8 @@ export default function QuickViewModal() {
                                 <span className="plus-cart" onClick={() => setQuantity((q) => q + 1)} />
                             </div>
                             <div className="button-buy">
-                                <Link className="btn btn-cart" onClick={handleAddCart} href="shop/shop-cart">Ajouter au panier</Link>
-                                <Link className="btn btn-buy" href="shop/shop-checkout">Acheter maintenant</Link>
+                                <Link className="btn btn-cart" onClick={handleAddCart} href="/shop/shop-cart">Ajouter au panier</Link>
+                                <Link className="btn btn-buy" onClick={handleAddCart} href="/shop/shop-checkout">Acheter maintenant</Link>
                             </div>
                         </div>
                     </div>

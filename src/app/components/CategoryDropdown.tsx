@@ -27,7 +27,7 @@ export default function CategoryDropdown({ categories }: { categories: Category[
                 onClick={toggleDropdown}
             >
         <span className="dropdown-right font-sm-bold color-white">
-            Shop By Categories
+          Catégories
         </span>
             </button>
 

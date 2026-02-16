@@ -15,7 +15,7 @@ export default function VerticalPromotionSwiper({
         <Swiper
             direction="vertical"
             modules={[Autoplay]}
-            slidesPerView={3}
+            slidesPerView={6}
             spaceBetween={10}
             autoplay={{
                 delay: 3000,
@@ -23,7 +23,7 @@ export default function VerticalPromotionSwiper({
             }}
             loop
             className="swiper-vertical-1"
-            style={{ height: "400px" }}
+            style={{ height: "100%" }}
         >
             {promotions.map((promo) => (
                 <SwiperSlide key={promo.id}>

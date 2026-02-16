@@ -9,3 +9,35 @@
     transform: rotate(180deg);
     display: none !important;
 }
+.search-popup li:hover {
+    background-color: #f8f9fa;
+}
+.cursor-pointer {
+    cursor: pointer;
+}
+.btn.btn-delete {
+    background-image: url(/images/page/wishlist/delete.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 0px 0px 0px 0px;
+    height: 34px;
+    width: 34px;
+}
+.btn.btn-buy {
+    color: #fff;
+    text-align: center;
+    background-color: #00783d;
+    border: 1px solid #8c9ec5;
+
+}
+.list-none-border {
+    padding: 15px 0px;
+    border: 0px !important;
+    margin: -10px 0px 0px 0px;
+}
+.list-none-border.list-brands a img {
+    opacity: 0.3;
+    max-height: 50px;
+    width: 100%;
+    transition: 0.2s;
+}

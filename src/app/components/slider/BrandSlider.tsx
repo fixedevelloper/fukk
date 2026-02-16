@@ -47,13 +47,14 @@ export default function BrandSlider() {
                             {brands.map((brand, idx) => (
                                 <SwiperSlide key={idx} className="swiper-slide">
                                     <a href={brand.image?.src}>
-                                        <div className="relative w-24 h-12">
+                                        <div className="relative w-24 h-50">
                                             <Image
                                                 src={brand.image?.src || '/images/default.png'}
                                                 alt={brand.name}
-                                                fill
                                                 unoptimized
-                                                className="object-contain"
+                                                height={50}
+                                                width={275}
+                                                className=""
                                             />
                                         </div>
                                     </a>

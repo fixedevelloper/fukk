@@ -50,7 +50,7 @@ export function VendorLayout({ store }: Props) {
                                 {store.cover_image && (
                                     <Image
                                         src={store?.cover_image.thumb|| '/images/default.png'}
-                                        alt="Ecom"
+                                        alt="FinduKarko"
                                         fill
                             /*            width={1290}
                                         height={260}*/
@@ -84,7 +84,7 @@ export function VendorLayout({ store }: Props) {
                                     Membre depuis {store.created_at}
                                 </span>
                                         <div className="rating d-inline-block">
-                                            <Image src={star} alt="Ecom" />
+                                            <Image src={star} alt="FinduKarko" />
                                             <span className="font-xs color-gray-500"> (65)</span>
                                         </div>
                                     </div>
@@ -112,7 +112,7 @@ export function VendorLayout({ store }: Props) {
                             <div className="box-featured-product">
                                 <div className="item-featured">
                                     <div className="featured-icon">
-                                        <img src={delivery} alt="Ecom" />
+                                        <img src={delivery} alt="FinduKarko" />
                                     </div>
                                     <div className="featured-info">
                                         <span className="font-sm-bold color-gray-1000">Livraison gratuite</span>
@@ -122,7 +122,7 @@ export function VendorLayout({ store }: Props) {
 
                                 <div className="item-featured">
                                     <div className="featured-icon">
-                                        <Image src={support} alt="Ecom" width={100} height={100} />
+                                        <Image src={support} alt="FinduKarko" width={100} height={100} />
                                     </div>
                                     <div className="featured-info">
                                         <span className="font-sm-bold color-gray-1000">Support 24/7</span>
@@ -132,7 +132,7 @@ export function VendorLayout({ store }: Props) {
 
                                 <div className="item-featured">
                                     <div className="featured-icon">
-                                        <Image src={returnIcon} alt="Ecom" />
+                                        <Image src={returnIcon} alt="FinduKarko" />
                                     </div>
                                     <div className="featured-info">
                                         <span className="font-sm-bold color-gray-1000">Retour & remboursement</span>
@@ -142,7 +142,7 @@ export function VendorLayout({ store }: Props) {
 
                                 <div className="item-featured">
                                     <div className="featured-icon">
-                                        <Image src={payment} alt="Ecom" />
+                                        <Image src={payment} alt="FinduKarko" />
                                     </div>
                                     <div className="featured-info">
                                         <span className="font-sm-bold color-gray-1000">Paiement sécurisé</span>

@@ -6,6 +6,7 @@ import {Product} from "../../../types/FrontType";
 import ProductGallery from "../slider/ProductGallery";
 import {ProductDescription} from "./ProductDescription";
 import {FrequentlyBoughtTogether} from "./FrequentlyBoughtTogether";
+import HookShippingSelector from "./HookShippingSelector";
 
 
 type ProductShowProps = {
@@ -96,14 +97,14 @@ export function ProductShow({product}: ProductShowProps) {
                                     </div>
                                 </div>
                                 <div className="col-lg-8 text-start text-sm-end">
-                                    <a href="#" className="mr-20">
+                                 {/*   <a href="#" className="mr-20">
                                         <span className="btn btn-wishlist mr-5" />
                                         <span className="font-md color-gray-900">Ajouter à la liste de souhaits</span>
                                     </a>
                                     <a href="#">
                                         <span className="btn btn-compare mr-5" />
                                         <span className="font-md color-gray-900">Ajouter à comparer</span>
-                                    </a>
+                                    </a>*/}
                                 </div>
                             </div>
 
@@ -135,11 +136,18 @@ export function ProductShow({product}: ProductShowProps) {
                     </span>
                                             </div>
                                             <div className="col-lg-6 col-md-6 mb-20">
-                    <span className="font-sm font-medium color-gray-900">
-                      Livraison gratuite<br/>
-                      <span className="color-gray-500">Disponible pour toutes les zones.</span><br/>
-                      <span className="color-gray-500">Options & informations de livraison</span>
-                    </span>
+                                                <div className="box-product-color">
+                                                    <p className="font-sm color-gray-900">
+                                                        Couleur: <span className="color-brand-2 nameColor">Rose doré</span>
+                                                    </p>
+                                                    <ul className="list-colors">
+                                                        <li className="disabled"><img src="/images/page/product/img-thumb.png" alt="FinduKarko" title="Rose"/></li>
+                                                        <li><img src="/images/page/product/img-thumb.png" alt="FinduKarko" title="Or"/></li>
+                                                        <li><img src="/images/page/product/img-thumb.png" alt="FinduKarko" title="Rose doré"/></li>
+                                                        <li><img src="/images/page/product/img-thumb.png" alt="FinduKarko" title="Argent"/></li>
+                                                        <li className="active"><img src="/images/page/product/img-thumb.png" alt="FinduKarko" title="Rose doré"/></li>
+                                                    </ul>
+                                                </div>
                                             </div>
                                             <div className="col-lg-12 mb-20">
                                                 <div className="d-inline-block">
@@ -158,18 +166,8 @@ export function ProductShow({product}: ProductShowProps) {
 
                                 <div className="col-md-5">
                                     <div className="box-border-product">
-                                        <div className="box-product-color">
-                                            <p className="font-sm color-gray-900">
-                                                Couleur: <span className="color-brand-2 nameColor">Rose doré</span>
-                                            </p>
-                                            <ul className="list-colors">
-                                                <li className="disabled"><img src="/images/page/product/img-thumb.png" alt="Ecom" title="Rose"/></li>
-                                                <li><img src="/images/page/product/img-thumb.png" alt="Ecom" title="Or"/></li>
-                                                <li><img src="/images/page/product/img-thumb.png" alt="Ecom" title="Rose doré"/></li>
-                                                <li><img src="/images/page/product/img-thumb.png" alt="Ecom" title="Argent"/></li>
-                                                <li className="active"><img src="/images/page/product/img-thumb.png" alt="Ecom" title="Rose doré"/></li>
-                                            </ul>
-                                        </div>
+
+                                        <HookShippingSelector productId={product.id} />
 
                                         <div className="buy-product mt-10 d-flex">
                                             <div className="font-sm text-quantity">Quantité</div>
@@ -208,7 +206,7 @@ export function ProductShow({product}: ProductShowProps) {
 
             <div className="container mt-20">
                 <div className="text-center">
-                    <a href="#"><img src="/images/page/product/banner-ads.png" alt="Ecom"/></a>
+                    <a href="#"><img src="/images/page/product/banner-ads.png" alt="FinduKarko"/></a>
                 </div>
             </div>
         </>

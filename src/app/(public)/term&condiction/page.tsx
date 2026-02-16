@@ -12,11 +12,11 @@ export default function TermAndCondition() {
                         <img
                             className="mb-30"
                             src="/assets/imgs/page/about/team.jpg"
-                            alt="Conditions Générales Ecom"
+                            alt="Conditions Générales FinduKarko"
                         />
 
                         <p>
-                            Merci d’utiliser <strong>Ecom</strong>. La présente
+                            Merci d’utiliser <strong>FinduKarko</strong>. La présente
                             politique a pour objectif de vous informer de la manière
                             dont vos données personnelles sont collectées, utilisées
                             et protégées.

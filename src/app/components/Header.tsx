@@ -10,6 +10,7 @@ import Image from "next/image";
 import {Category, ResponsePaginate} from "../../types/FrontType";
 import MegaMenu from "./MegaMenu";
 import MobileMenu from "./MobileMenu";
+import SearchProducts from "./select/SearchProducts";
 
 export default function Header () {
     const [search, setSearch] = useState("");
@@ -79,20 +80,7 @@ export default function Header () {
                                     <Image src='/images/theme/logo.webp' alt="FindKarko" width={150} height={50} />
                                 </Link>
                             </div>
-                            <div className="header-search">
-                                <div className="box-header-search">
-                                    <form className="form-search" method="post" action="#">
-                                        <div className="box-keysearch">
-                                            <input className="form-control font-xs"
-                                                   type="text"
-                                                   value={search}
-                                                   placeholder="Que cherches-tu aujourd’hui ?"
-                                                   onChange={(e) => setSearch(e.target.value)}
-                                            />
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
+                        <SearchProducts />
                             <div className="header-nav text-start">
                                 <nav className="nav-main-menu d-none d-xl-block">
                                     <ul className="main-menu">
@@ -126,18 +114,7 @@ export default function Header () {
                         </div>
                         <div className="discount font-16 font-bold d-none d-xl-block">OFFRE SPÉCIALE</div>
                         <div className="header-search-mobile d-block d-xl-none">
-                            <div className="box-header-search">
-                                <form className="form-search" method="post" action="#">
-                                    <div className="box-keysearch">
-                                        <input className="form-control font-xl"
-                                               type="text"
-                                               value={search}
-                                               placeholder="Que cherches-tu aujourd’hui ?"
-                                               onChange={(e) => setSearch(e.target.value)}
-                                        />
-                                    </div>
-                                </form>
-                            </div>
+                            <SearchProducts />
                         </div>
                     </div>
                 </div>

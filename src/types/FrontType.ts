@@ -314,3 +314,29 @@ export type Banner = {
     is_active?: boolean;
     created_at?: string;
 }
+export type Zone = {
+    id: number;
+    name: string;
+    latitude: number;
+    longitude: number;
+};
+
+export type City = {
+    id: number;
+    name: string;
+    latitude: number;
+    longitude: number;
+    zones?: Zone[];
+};
+export type ShippingMethod = {
+    id: number;
+    name: string;
+    title: string;
+    description: string;
+    type: "distance" | "fixed";
+    base_price: number;
+    price_per_km?: number;
+    city_id: number | null;
+    is_free: boolean;
+    active: boolean;
+};

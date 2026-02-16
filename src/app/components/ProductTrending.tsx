@@ -96,7 +96,7 @@ export default function ProductTrending() {
                                 </SwiperSlide>
                             ))}
                         </Swiper>
-                        <div className="mt-20"><a href="shop-single-product.html"><img src="images/homepage4/banner-ads.png" alt="Ecom"/></a></div>
+                        <div className="mt-20"><a href="shop-single-product.html"><img src="images/homepage4/banner-ads.png" alt="FinduKarko"/></a></div>
                         <div className="box-content mt-45">
                             <div className="head-main bd-gray-200">
                                 <div className="row">

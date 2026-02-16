@@ -75,7 +75,7 @@ export default function EditSliderPage() {
                 variant: "success",
             });
 
-            router.push("/xxadmin/sliders");
+            router.push("/xxadmin/sliders/list");
 
         } catch (err) {
             console.error(err);

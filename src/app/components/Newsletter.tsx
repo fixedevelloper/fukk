@@ -2,11 +2,13 @@
 
 import React, { useState } from "react";
 import Image from "next/image"
-export function Newaletter() {
+import axiosServices from "../../lib/axios";
+export function Newsletter() {
     const [email, setEmail] = useState("");
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
     const [error, setError] = useState("");
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -14,36 +16,48 @@ export function Newaletter() {
         setMessage("");
         setError("");
 
+        // Validation email
         if (!email) {
-            setError("Please enter your email");
+            setError("Veuillez entrer votre adresse e-mail");
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            setError("Adresse e-mail invalide");
             return;
         }
 
         try {
             setLoading(true);
 
-            const res = await fetch("/api/newsletter", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ email }),
+            const response = await axiosServices.post("/api/newsletter", {
+                email: email,
             });
 
-            const data = await res.json();
+            setMessage("Inscription réussie 🎉");
+            setEmail("");
 
-            if (!res.ok) {
-                throw new Error(data.message || "Something went wrong");
+        } catch (error: any) {
+
+            if (error.response) {
+                // Erreur venant du backend
+                setError(
+                    error.response.data?.message ||
+                    "Une erreur est survenue"
+                );
+            } else if (error.request) {
+                // Pas de réponse serveur
+                setError("Serveur inaccessible. Veuillez réessayer.");
+            } else {
+                setError("Impossible de s’abonner pour le moment");
             }
 
-            setMessage("Subscription successful 🎉");
-            setEmail("");
-        } catch (err: any) {
-            setError(err.message);
         } finally {
             setLoading(false);
         }
     };
+
 
     return (
         <>
@@ -54,55 +68,75 @@ export function Newaletter() {
                         <li>
                             <div className="item-list">
                                 <div className="icon-left">
-                                    <Image width={40} height={40} src="/images/template/delivery.svg" alt="Ecom"/>
+                                    <Image width={40} height={40} src="/images/template/delivery.svg" alt="FinduKarko"/>
                                 </div>
                                 <div className="info-right">
                                     <h5 className="font-lg-bold color-gray-100">Livraison gratuite</h5>
-                                    <p className="font-sm color-gray-500">Pour toutes les commandes supérieures à 10 $</p>
+                                    <p className="font-sm color-gray-500">
+                                        Pour toute commande supérieure à 100 000 FCFA
+                                    </p>
                                 </div>
                             </div>
                         </li>
+
                         <li>
-                            <div className="item-list">
+                            <div className="item-list pb-25">
                                 <div className="icon-left">
-                                    <Image width={40} height={40} src="/images/template/support.svg" alt="Ecom"/>
+                                    <Image width={40} height={40} src="/images/template/support.svg" alt="FinduKarko"/>
                                 </div>
                                 <div className="info-right">
                                     <h5 className="font-lg-bold color-gray-100">Support 24/7</h5>
-                                    <p className="font-sm color-gray-500">Achetez avec un expert</p>
+                                    <p className="font-sm color-gray-500">
+                                        Assistance disponible à tout moment
+                                    </p>
+                                    <br/>
                                 </div>
                             </div>
                         </li>
+
                         <li>
-                            <div className="item-list">
+                            <div className="item-list pb-45">
                                 <div className="icon-left">
-                                    <Image width={40} height={40} src="/images/template/voucher.svg" alt="Ecom"/>
+                                    <Image width={40} height={40} src="/images/template/voucher.svg" alt="FinduKarko"/>
                                 </div>
                                 <div className="info-right">
                                     <h5 className="font-lg-bold color-gray-100">Bon cadeau</h5>
-                                    <p className="font-sm color-gray-500">Parrainez un ami</p>
+                                    <p className="font-sm color-gray-500">
+                                        Offrez à vos proches
+                                    </p>
+                                    <br/>
                                 </div>
                             </div>
                         </li>
+
                         <li>
                             <div className="item-list">
                                 <div className="icon-left">
-                                    <Image width={40} height={40} src="/images/template/return.svg" alt="Ecom"/>
+                                    <Image width={40} height={40} src="/images/template/return.svg" alt="FinduKarko"/>
                                 </div>
                                 <div className="info-right">
-                                    <h5 className="font-lg-bold color-gray-100">Retour & Remboursement</h5>
-                                    <p className="font-sm color-gray-500">Retour gratuit pour les commandes 200 </p>
+                                    <h5 className="font-lg-bold color-gray-100">
+                                        Retour & Remboursement
+                                    </h5>
+                                    <p className="font-sm color-gray-500">
+                                        Retours gratuits sous conditions
+                                    </p>
                                 </div>
                             </div>
                         </li>
+
                         <li>
                             <div className="item-list">
                                 <div className="icon-left">
-                                    <Image width={40} height={40} src="/images/template/secure.svg" alt="Ecom"/>
+                                    <Image width={40} height={40} src="/images/template/secure.svg" alt="FinduKarko"/>
                                 </div>
                                 <div className="info-right">
-                                    <h5 className="font-lg-bold color-gray-100">Paiement sécurisé</h5>
-                                    <p className="font-sm color-gray-500">100% protégé</p>
+                                    <h5 className="font-lg-bold color-gray-100">
+                                        Paiement sécurisé
+                                    </h5>
+                                    <p className="font-sm color-gray-500">
+                                        Transactions 100% protégées
+                                    </p>
                                 </div>
                             </div>
                         </li>
@@ -120,8 +154,11 @@ export function Newaletter() {
                                 <span className="color-warning">10%</span> de réduction
                             </h3>
                             <p className="font-lg color-white">
-                                Recevez des mises à jour par e-mail sur notre boutique et{" "}
-                                <span className="font-lg-bold">nos offres spéciales.</span>
+                                Recevez nos nouveautés et{" "}
+                                <span className="font-lg-bold">
+                                    offres exclusives
+                                </span>{" "}
+                                directement par e-mail.
                             </p>
                         </div>
 
@@ -163,6 +200,6 @@ export function Newaletter() {
                 </div>
             </section>
         </>
-
     );
 }
+

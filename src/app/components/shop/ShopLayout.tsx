@@ -13,8 +13,8 @@ export default function ShopLayout() {
                 <div className="breadcrumbs-div">
                     <div className="container">
                         <ul className="breadcrumb">
-                            <li><Link className="font-xs color-gray-1000" href="/">Home</Link></li>
-                            <li><Link className="font-xs color-gray-500" href="/shop">Electronics</Link></li>
+                            <li><Link className="font-xs color-gray-1000" href="/">Accueil</Link></li>
+                            <li><Link className="font-xs color-gray-500" href="/shop">Shop</Link></li>
                         </ul>
                     </div>
                 </div>

@@ -149,7 +149,7 @@ export default function ContactPage() {
                             <div className="box-image mb-20">
                                 <img
                                     src="/images/page/contact/chat.svg"
-                                    alt="Chat Ecom"
+                                    alt="Chat FinduKarko"
                                 />
                             </div>
                             <h4 className="mb-5">Ventes</h4>
@@ -158,9 +158,9 @@ export default function ContactPage() {
                             </p>
                             <a
                                 className="font-sm color-gray-900"
-                                href="mailto:sales@ecom.com"
+                                href="mailto:sales@FinduKarko.com"
                             >
-                                sales@ecom.com
+                                sales@FinduKarko.com
                             </a>
                         </div>
 

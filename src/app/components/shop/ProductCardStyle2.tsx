@@ -45,7 +45,7 @@ export default function ProductCardStyle2({ product }: Props) {
                 </div>
                 <div className="price-info">
                     <strong
-                        className="color-brand-3 price-main">{product.price}</strong>
+                        className="color-brand-3 price-main">{product.price} FCFA</strong>
                 </div>
             </div>
         </div>

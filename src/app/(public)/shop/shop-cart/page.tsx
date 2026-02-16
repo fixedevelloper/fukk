@@ -157,7 +157,7 @@ export default function ShopCart() {
                             <div className="summary-cart border p-3">
                                 <div className="mb-3 d-flex justify-content-between">
                                     <span>Sous-total</span>
-                                    <strong>${subtotal.toFixed(2)}</strong>
+                                    <strong>{subtotal.toFixed(2)} FCFA</strong>
                                 </div>
                                 <div className="mb-3 d-flex justify-content-between">
                                     <span>Livraison</span>
@@ -165,7 +165,7 @@ export default function ShopCart() {
                                 </div>
                                 <div className="mb-3 d-flex justify-content-between">
                                     <span>Total</span>
-                                    <strong>${subtotal.toFixed(2)}</strong>
+                                    <strong>{subtotal.toFixed(2)} FCFA</strong>
                                 </div>
                                 <Link className="btn btn-buy w-100" href="/shop/shop-checkout">
                                     Passer à la validation

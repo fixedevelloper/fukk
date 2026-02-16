@@ -18,8 +18,6 @@ export async function generateMetadata({
 }) {
     const { slug } = await params;
     const product = await getProductBySlug(slug);
-
-    console.log(product)
     if (!product) {
         return {
             title: "Produit introuvable",
@@ -30,12 +28,12 @@ export async function generateMetadata({
 
     return {
         title: product?.name,
-        description: product?.short_description || product?.description || "Découvrez ce produit dans notre boutique en ligne.",
+        description: product?.short_description || `Achetez ${product.name} au meilleur prix au Cameroun sur FindKarko. Livraison rapide et paiement sécurisé.`,
         keywords: [
             product?.name,
             product?.brand?.name || "",
             ...(product?.categories?.map((c) => c.name) || []),
-            "acheter en ligne",
+            "acheter en ligne au cameroun",
             "boutique",
         ],
         alternates: {
