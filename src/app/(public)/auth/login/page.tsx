@@ -4,6 +4,7 @@ import { useState } from "react"
 import { signIn } from "next-auth/react"
 import {usePathname, useRouter} from "next/navigation";
 import Link from "next/link";
+import {enqueueSnackbar} from "notistack";
 
 
 export default function LoginCustomer() {
@@ -31,6 +32,14 @@ export default function LoginCustomer() {
             setLoading(false)
             console.error(res?.error)
             setError(res?.error || "Erreur login")
+            enqueueSnackbar("Email ou mot de passe incorrect.", {
+                variant: "error",
+                autoHideDuration: 2500,
+                anchorOrigin: {
+                    vertical: "top",
+                    horizontal: "right",
+                },
+            });
         }
     }
 
@@ -38,7 +47,7 @@ export default function LoginCustomer() {
         <section className="section-box shop-template mt-60">
             <div className="container">
                 <div className="row mb-100">
-                    <div className="col-lg-1"></div>
+                    <div className="col-lg-1"/>
                     <div className="col-lg-5">
                         <h3>Connexion membre</h3>
                         <p className="font-md color-gray-500">Bienvenue de retour !</p>
@@ -80,9 +89,9 @@ export default function LoginCustomer() {
                                 </div>
                                 <div className="col-lg-6 text-end">
                                     <div className="form-group">
-                                        <a className="font-xs color-gray-500" href="#">
+                                        <Link className="font-xs color-gray-500" href="/auth/forget-password">
                                             Mot de passe oublié ?
-                                        </a>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>

@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link";
+import {enqueueSnackbar} from "notistack";
 
 export default function RegisterCustomer() {
     const router = useRouter()
@@ -16,49 +17,83 @@ export default function RegisterCustomer() {
     const [error, setError] = useState<string | null>(null)
     const [loading, setLoading] = useState(false)
 
+
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-        setError(null)
+        e.preventDefault();
+        setError(null);
 
+        // Vérification des conditions
         if (!agree) {
-            setError("You must agree to the terms.")
-            return
-        }
-        if (password !== rePassword) {
-            setError("Passwords do not match.")
-            return
+            enqueueSnackbar("Vous devez accepter les conditions.", {
+                variant: "error",
+                autoHideDuration: 3000,
+                anchorOrigin: { vertical: "top", horizontal: "right" },
+            });
+            return;
         }
 
-        setLoading(true)
+        if (password !== rePassword) {
+            enqueueSnackbar("Les mots de passe ne correspondent pas.", {
+                variant: "error",
+                autoHideDuration: 3000,
+                anchorOrigin: { vertical: "top", horizontal: "right" },
+            });
+            return;
+        }
+
+        setLoading(true);
 
         try {
-            // Exemple: appel API pour créer le compte
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ first_name,last_name, email, phone, password,user_type:2 }),
-            })
-            const data = await res.json()
-            setLoading(false)
+                body: JSON.stringify({
+                    first_name,
+                    last_name,
+                    email,
+                    phone,
+                    password,
+                    user_type: 2,
+                }),
+            });
+
+            const data = await res.json();
+            setLoading(false);
 
             if (!res.ok) {
-                setError(data.message || "Registration failed")
+                enqueueSnackbar(data.message || "Inscription échouée.", {
+                    variant: "error",
+                    autoHideDuration: 3000,
+                    anchorOrigin: { vertical: "top", horizontal: "right" },
+                });
             } else {
-                // Redirige vers la page précédente
-                const previousPage = document.referrer || "/account"
-                router.push(previousPage)
+                // Succès
+                enqueueSnackbar("Inscription réussie ! Veuillez vous connecter.", {
+                    variant: "success",
+                    autoHideDuration: 2000,
+                    anchorOrigin: { vertical: "top", horizontal: "right" },
+                });
+
+                // Redirige vers la page login après 2s
+                setTimeout(() => {
+                    router.push("/auth/login");
+                }, 2000);
             }
         } catch (err) {
-            setLoading(false)
-            setError("Something went wrong")
+            setLoading(false);
+            enqueueSnackbar("Une erreur est survenue. Veuillez réessayer.", {
+                variant: "error",
+                autoHideDuration: 3000,
+                anchorOrigin: { vertical: "top", horizontal: "right" },
+            });
         }
-    }
+    };
 
     return (
         <section className="section-box shop-template mt-60">
             <div className="container">
                 <div className="row mb-100">
-                    <div className="col-lg-1"></div>
+                    <div className="col-lg-1"/>
                     <div className="col-lg-6">
                         <h3>Créer un compte</h3>
                         <p className="font-md color-gray-500">

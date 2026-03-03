@@ -1,14 +1,18 @@
 'use client';
 
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axiosServices from "../../../../lib/axios";
-import { MediaCard } from "../MediaCard";
-import {Attribute, Category, Image} from "../../../../types/FrontType";
+import {Category, Image} from "../../../../types/FrontType";
 import {enqueueSnackbar} from "notistack";
+import ImageMediaCard from "../ImageModal";
+import RichTextEditor from "../RichTextEditor";
+import RelatedProductsSelector from "./RelatedProductsSelector";
+import CreateOrEditProductVariations, {Attribute} from "./CreateProductVariations";
 
 
 export default function ProductAdd() {
     const [product, setProduct] = useState<any>({
+        type: "simple",
         name: "",
         slug: "",
         short_description: "",
@@ -31,23 +35,63 @@ export default function ProductAdd() {
         category_id: "",
         sub_category_id: "",
         attributes: [] as number[],
+        related_products: [] as number[],
         image_id: null,
         gallery: [] as number[],
+        variations: [],
     });
 
     const [categories, setCategories] = useState<Category[]>([]);
     const [subCategories, setSubCategories] = useState<Category[]>([]);
     const [attributes, setAttributes] = useState<Attribute[]>([]);
+    const [attributesingle, setAttributesingle] = useState<Attribute[]>([]);
     const [loading, setLoading] = useState(false);
 
     // Fetch categories + attributes
     useEffect(() => {
         axiosServices.get("/api/admin-categories-parents").then(res => setCategories(res.data.data));
-        axiosServices.get("/api/attributes").then(res => setAttributes(res.data.data));
+        const fetchAttributes = async () => {
+            try {
+                const response = await axiosServices.get("/api/attributes");
+                const data = response.data; // axios met déjà la réponse JSON dans data
+                setAttributesingle(data.data)
+                // 🔥 Grouper par attribute_set
+                const grouped = data.data.reduce((acc: any, item: any) => {
+                    const setId = item.attribute_set.id;
+
+                    if (!acc[setId]) {
+                        acc[setId] = {
+                            id: setId,
+                            name: item.attribute_set.title,
+                            type:
+                                item.attribute_set.display_layout === "swatch_dropdown"
+                                    ? "color"
+                                    : "text",
+                            values: [],
+                        };
+                    }
+
+                    acc[setId].values.push({
+                        id: item.id,
+                        name: item.title,
+                        value: item.color,
+                    });
+
+                    return acc;
+                }, {});
+
+                setAttributes(Object.values(grouped));
+            } catch (error) {
+                console.error("Erreur lors du chargement des attributs :", error);
+            }
+        };
+
+        fetchAttributes();
     }, []);
 
+
     const handleCategoryChange = (id: number) => {
-        setProduct({ ...product, category_id: id, sub_category_id: "" });
+        setProduct({...product, category_id: id, sub_category_id: ""});
         const parent = categories.find(c => c.id === id);
         setSubCategories(parent?.children || []);
     };
@@ -56,13 +100,16 @@ export default function ProductAdd() {
         const attrs = product.attributes.includes(id)
             ? product.attributes.filter((a: number) => a !== id)
             : [...product.attributes, id];
-        setProduct({ ...product, attributes: attrs });
+        setProduct({...product, attributes: attrs});
     };
-    console.log(product)
+
     const handleSubmit = async (status: "draft" | "published") => {
         // Validation simple
         if (!product.name) return alert("Le nom du produit est obligatoire");
-        if (!product.price) return alert("Le prix est obligatoire");
+        if (product.type === "simple" && !product.price) {
+            return alert("Le prix est obligatoire");
+        }
+
         if (!product.category_id) return alert("La catégorie est obligatoire");
 
         setLoading(true);
@@ -74,10 +121,10 @@ export default function ProductAdd() {
                 gallery: product.gallery,
             });
 
-            enqueueSnackbar("Produit enregistré avec succès !", { variant: 'success' })
+            enqueueSnackbar("Produit enregistré avec succès !", {variant: 'success'})
         } catch (e) {
             console.error(e);
-            enqueueSnackbar("Erreur lors de l'enregistrement", { variant: "error" });
+            enqueueSnackbar("Erreur lors de l'enregistrement", {variant: "error"});
             //alert("Erreur lors de l'enregistrement");
         } finally {
             setLoading(false);
@@ -114,12 +161,34 @@ export default function ProductAdd() {
                         <div className="card-header"><h4>Informations de base</h4></div>
                         <div className="card-body">
                             <div className="mb-3">
+                                <label className="form-label">
+                                    Type de produit
+                                </label>
+                                <select
+                                    className="form-select"
+                                    value={product.type}
+                                    onChange={(e) =>
+                                        setProduct({
+                                            ...product,
+                                            type: e.target.value,
+                                        })
+                                    }
+                                >
+                                    <option value="simple">
+                                        Produit simple
+                                    </option>
+                                    <option value="configurable">
+                                        Produit configurable
+                                    </option>
+                                </select>
+                            </div>
+                            <div className="mb-3">
                                 <label className="form-label">Nom du produit</label>
                                 <input
                                     className="form-control"
                                     type="text"
                                     value={product.name}
-                                    onChange={e => setProduct({ ...product, name: e.target.value })}
+                                    onChange={e => setProduct({...product, name: e.target.value})}
                                 />
                             </div>
 
@@ -129,18 +198,26 @@ export default function ProductAdd() {
                                     className="form-control"
                                     rows={2}
                                     value={product.short_description}
-                                    onChange={e => setProduct({ ...product, short_description: e.target.value })}
+                                    onChange={e => setProduct({...product, short_description: e.target.value})}
                                 />
                             </div>
 
                             <div className="mb-3">
                                 <label className="form-label">Description complète</label>
-                                <textarea
+                                {/*     <textarea
                                     className="form-control"
                                     rows={4}
                                     value={product.description}
                                     onChange={e => setProduct({ ...product, description: e.target.value })}
+                                />*/}
+                                <RichTextEditor
+                                    value={product.description}
+                                    onChange={(value: string) =>
+                                        setProduct({...product, description: value})
+                                    }
+                                    placeholder="Write your product description..."
                                 />
+
                             </div>
 
                             <div className="row">
@@ -150,7 +227,7 @@ export default function ProductAdd() {
                                         className="form-control"
                                         type="text"
                                         value={product.price}
-                                        onChange={e => setProduct({ ...product, price: e.target.value })}
+                                        onChange={e => setProduct({...product, price: e.target.value})}
                                     />
                                 </div>
                                 <div className="col-md-4 mb-3">
@@ -159,7 +236,7 @@ export default function ProductAdd() {
                                         className="form-control"
                                         type="text"
                                         value={product.sale_price}
-                                        onChange={e => setProduct({ ...product, sale_price: e.target.value })}
+                                        onChange={e => setProduct({...product, sale_price: e.target.value})}
                                     />
                                 </div>
                                 <div className="col-md-4 mb-3">
@@ -168,7 +245,7 @@ export default function ProductAdd() {
                                         className="form-control"
                                         type="text"
                                         value={product.sku}
-                                        onChange={e => setProduct({ ...product, sku: e.target.value })}
+                                        onChange={e => setProduct({...product, sku: e.target.value})}
                                     />
                                 </div>
                             </div>
@@ -185,7 +262,7 @@ export default function ProductAdd() {
                                     <input
                                         className="form-control"
                                         value={product.length}
-                                        onChange={e => setProduct({ ...product, length: e.target.value })}
+                                        onChange={e => setProduct({...product, length: e.target.value})}
                                     />
                                 </div>
                                 <div className="col-md-3 mb-3">
@@ -193,7 +270,7 @@ export default function ProductAdd() {
                                     <input
                                         className="form-control"
                                         value={product.wide}
-                                        onChange={e => setProduct({ ...product, wide: e.target.value })}
+                                        onChange={e => setProduct({...product, wide: e.target.value})}
                                     />
                                 </div>
                                 <div className="col-md-3 mb-3">
@@ -201,7 +278,7 @@ export default function ProductAdd() {
                                     <input
                                         className="form-control"
                                         value={product.height}
-                                        onChange={e => setProduct({ ...product, height: e.target.value })}
+                                        onChange={e => setProduct({...product, height: e.target.value})}
                                     />
                                 </div>
                                 <div className="col-md-3 mb-3">
@@ -209,7 +286,7 @@ export default function ProductAdd() {
                                     <input
                                         className="form-control"
                                         value={product.weight}
-                                        onChange={e => setProduct({ ...product, weight: e.target.value })}
+                                        onChange={e => setProduct({...product, weight: e.target.value})}
                                     />
                                 </div>
                             </div>
@@ -225,7 +302,7 @@ export default function ProductAdd() {
                                     type="checkbox"
                                     className="form-check-input"
                                     checked={product.is_featured}
-                                    onChange={e => setProduct({ ...product, is_featured: e.target.checked })}
+                                    onChange={e => setProduct({...product, is_featured: e.target.checked})}
                                 />
                                 <span className="form-check-label">Produit mis en avant</span>
                             </label>
@@ -236,7 +313,7 @@ export default function ProductAdd() {
                                     className="form-check-input"
                                     checked={product.allow_checkout_when_out_of_stock}
                                     onChange={e =>
-                                        setProduct({ ...product, allow_checkout_when_out_of_stock: e.target.checked })
+                                        setProduct({...product, allow_checkout_when_out_of_stock: e.target.checked})
                                     }
                                 />
                                 <span className="form-check-label">Autoriser la commande hors stock</span>
@@ -249,7 +326,7 @@ export default function ProductAdd() {
                                         className="form-control"
                                         type="number"
                                         value={product.quantity}
-                                        onChange={e => setProduct({ ...product, quantity: Number(e.target.value) })}
+                                        onChange={e => setProduct({...product, quantity: Number(e.target.value)})}
                                     />
                                 </div>
                             </div>
@@ -259,27 +336,28 @@ export default function ProductAdd() {
 
                 {/* Right column */}
                 <div className="col-lg-4">
-                    <MediaCard
-                        selectedImages={product.images}
-                        onChange={(images: Image[] | null) => {
-                            if (images) {
-                                setProduct({
-                                    ...product,
-                                    gallery: images.map(img => img.id),
-                                    image_id: images[0]?.id || null,
-                                });
-                            } else {
-                                setProduct({
-                                    ...product,
-                                    gallery: [],
-                                    image_id: null,
-                                });
-                            }
-                        }}
-                    />
+                    <div className="card mb-4">
+                        <div className="card-header"><h4>Images</h4></div>
+                        <div className="card-body">
+                            <ImageMediaCard
+                                multiple={true}
+                                value={product.images}
+                                onChange={(images: Image | Image[] | null) => {
+                                    const imagesArray = Array.isArray(images)
+                                        ? images
+                                        : images
+                                            ? [images] // si c’est un seul objet, on le met dans un tableau
+                                            : [];      // si null ou undefined, tableau vide
 
-
-
+                                    setProduct({
+                                        ...product,
+                                        gallery: imagesArray.map(img => img.id),
+                                        image_id: imagesArray[0]?.id || null,
+                                    });
+                                }}
+                            />
+                        </div>
+                    </div>
                     <div className="card mb-4">
                         <div className="card-header"><h4>Organisation</h4></div>
                         <div className="card-body">
@@ -305,7 +383,10 @@ export default function ProductAdd() {
                                     <select
                                         className="form-select"
                                         value={product.sub_category_id}
-                                        onChange={e => setProduct({ ...product, sub_category_id: Number(e.target.value) })}
+                                        onChange={e => setProduct({
+                                            ...product,
+                                            sub_category_id: Number(e.target.value)
+                                        })}
                                     >
                                         <option value="">-- Sélectionner sous-catégorie --</option>
                                         {subCategories.map(sub => (
@@ -316,28 +397,52 @@ export default function ProductAdd() {
                             )}
 
                             {/* Attributes */}
-                            <div className="card mb-4">
-                                <div className="card-header"><h5>Attributs</h5></div>
-                                <div className="card-body">
-                                    {attributes.map(attr => (
-                                        <label key={attr.id} className="form-check mb-2">
-                                            <input
-                                                type="checkbox"
-                                                className="form-check-input"
-                                                checked={product.attributes.includes(attr.id)}
-                                                onChange={() => toggleAttribute(attr.id)}
-                                            />
-                                            <span className="form-check-label">
-                        {attr.attribute_set?.title} - {attr.title}
+                            {product.type === "simple" && (
+                                <div className="card mb-4">
+                                    <div className="card-header"><h5>Attributs</h5></div>
+                                    <div className="card-body">
+                                        {attributesingle.map(attr => (
+                                            <label key={attr.id} className="form-check mb-2">
+                                                <input
+                                                    type="checkbox"
+                                                    className="form-check-input"
+                                                    checked={product.attributes.includes(attr.id)}
+                                                    onChange={() => toggleAttribute(attr.id)}
+                                                />
+                                                <span className="form-check-label">
+                                                     {attr.name}
+                       {/* {attr.attribute_set?.title} - {attr.title}*/}
                       </span>
-                                        </label>
-                                    ))}
-                                </div>
-                            </div>
+                                            </label>
+                                        ))}
+                                    </div>
+                                </div>)
+                            }
 
                         </div>
                     </div>
+                    <RelatedProductsSelector
+                        selected={product.related_products}
+                        onChange={(ids) =>
+                            setProduct({...product, related_products: ids})
+                        }
+                    />
+
                 </div>
+                {product.type === "configurable" && (
+                    <div className="col-12">
+                        <CreateOrEditProductVariations
+                            attributes={attributes}
+                            onChange={(variations) =>
+                                setProduct({
+                                    ...product,
+                                    variations,
+                                })
+                            }
+                        />
+                    </div>
+                )}
+
             </div>
         </section>
     );

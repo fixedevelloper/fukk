@@ -20,7 +20,7 @@ export function ProductDescription({ product }: Props) {
     const renderContent = () => {
         switch (activeTab) {
             case "description":
-                return <p>{product?.description}</p>;
+                return <div dangerouslySetInnerHTML={{ __html: product?.description || "" }} />;
 
             case "specification":
                 return <p>{product?.short_description}</p>;

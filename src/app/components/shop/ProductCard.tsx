@@ -6,6 +6,7 @@ import React from "react";
 import {useQuickViewStore} from "../../../store/useQuickViewStore";
 import Link from "next/link";
 import {Product} from "../../../types/FrontType";
+import {enqueueSnackbar} from "notistack";
 
 
 type Props = {
@@ -16,7 +17,26 @@ export default function ProductCard({ product }: Props) {
     const addWishlist = useWishlistStore((s) => s.addItem);
     const addCart = useCartStore((s) => s.addItem);
     const openModal = useQuickViewStore((s) => s.openModal);
+    const handleAddToCart = () => {
+        addCart({
+            id: product.id,
+            name: product.name,
+            price: product.sale_price ?? product.price,
+            quantity: 1,
+            image: product.image,
+            store: product.store,
+            slug: product.slug,
+        });
 
+        enqueueSnackbar(`${product.name} ajouté au panier`, {
+            variant: "success",
+            autoHideDuration: 2000,
+            anchorOrigin: {
+                vertical: "bottom",
+                horizontal: "right",
+            },
+        });
+    };
 
     return (
         <div className="card-grid-style-3">
@@ -47,15 +67,7 @@ export default function ProductCard({ product }: Props) {
                     <div className="mt-20">
                         <button
                             className="btn btn-cart"
-                            onClick={() => addCart({
-                                id: product.id,
-                                name: product.name,
-                                price: product.sale_price ?? product.price,
-                                quantity: 1,
-                                image: product.image,
-                                store: product.store,
-                                slug: product.slug,
-                            })}
+                            onClick={handleAddToCart}
                         >
                             Ajouter au panier
                         </button>

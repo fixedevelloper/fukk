@@ -1,5 +1,5 @@
 import {Product} from "../../../../types/FrontType";
-import {useRoleVisibility} from "../../../../hook/useRoleVisibility";
+import Link from "next/link";
 
 type ProductArticleProps = {
     product: Product;
@@ -56,9 +56,9 @@ export function ProductArticle({product}:ProductArticleProps) {
             </div>
 
             <div className="col-lg-2 col-sm-2 col-4 text-end">
-                <button className="btn btn-sm btn-brand me-2">
+                <Link href={`/xxadmin/products/${product.id}/edit`} className="btn btn-sm btn-brand me-2">
                     Edit
-                </button>
+                </Link>
                 <button className="btn btn-sm btn-light">
                     Delete
                 </button>

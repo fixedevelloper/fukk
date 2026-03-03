@@ -11,3 +11,20 @@
     padding: 0 10px;
 }
 
+.upload-file {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.upload-file a {
+    font-size: 100px;
+    color: #000;
+}
+.upload-file p {
+    text-align: center;
+    color: rgb(41, 40, 40);
+    font-weight: 400;
+    font-size: 18px;
+    margin-top: -40px;
+}

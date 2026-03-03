@@ -5,6 +5,8 @@ import { useParams, useRouter } from "next/navigation";
 import { MediaCard } from "../../../components/MediaCard";
 import axiosServices from "../../../../../lib/axios";
 import {Image} from "../../../../../types/FrontType";
+import RichTextEditor from "../../../components/RichTextEditor";
+import ImageMediaCard from "../../../components/ImageModal";
 
 // Types
 type Category = { id: number; name: string; children?: Category[] };
@@ -36,8 +38,10 @@ interface Product {
     sub_category_id: number | "";
     attributes: number[];
     image_id: number | null;
-    gallery: Image[];
+    gallery:number[];
+    images:number[];
 }
+
 
 export default function ProductForm() {
     const { id } = useParams();
@@ -67,7 +71,8 @@ export default function ProductForm() {
         sub_category_id: "",
         attributes: [],
         image_id: null,
-        gallery: [],
+        gallery: [] as number[],
+        images: []
     });
 
     const [categories, setCategories] = useState<Category[]>([]);
@@ -75,6 +80,7 @@ export default function ProductForm() {
     const [attributes, setAttributes] = useState<Attribute[]>([]);
     const [loading, setLoading] = useState(true);
 
+    // Fetch categories, attributes, and product
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -88,14 +94,41 @@ export default function ProductForm() {
 
                 if (id) {
                     const prodRes = await axiosServices.get(`/api/admin-products/${id}`);
-                    const prod = prodRes.data;
+                    const prod = prodRes.data.data;
+
+                    // Convert gallery for ImageMediaCard
+                    const galleryImages: Image[] = prod.gallery?.map((img: any) => ({
+                        id: img.id,
+                        thumb: img.thumb || img.url,
+                        alt: img.alt || img.name,
+                    })) || [];
+
                     setProduct({
-                        ...product,
-                        ...prod,
-                        attributes: prod.attributes.map((a: any) => a.id),
-                        category_id: prod.category_id,
-                        sub_category_id: prod.sub_category_id,
-                        gallery: prod.gallery || [],
+                        name: prod.name || "",
+                        slug: prod.slug || "",
+                        short_description: prod.short_description || "",
+                        description: prod.description || "",
+                        sku: prod.sku || "",
+                        reference: prod.reference || "",
+                        price: prod.price || "",
+                        sale_price: prod.sale_price || "",
+                        quantity: prod.quantity || 0,
+                        length: prod.length || "",
+                        wide: prod.wide || "",
+                        height: prod.height || "",
+                        weight: prod.weight || "",
+                        tax_id: prod.tax_id || "",
+                        status: prod.status || "draft",
+                        stock_status: prod.stock_status || "IN_OF_STOCK",
+                        allow_checkout_when_out_of_stock: prod.allow_checkout_when_out_of_stock || false,
+                        with_storehouse_management: prod.with_storehouse_management || true,
+                        is_featured: prod.is_featured || false,
+                        category_id: prod.categories?.map((a: any) => a.id) || "",
+                        sub_category_id: prod.categories?.map((a: any) => a.id) || "",
+                        attributes: prod.attributes?.map((a: any) => a.id) || [],
+                        image_id: prod.image_id || null,
+                        gallery: [] as number[],
+                        images:prod.images
                     });
 
                     const parent = catRes.data.data.find((c: any) => c.id === prod.category_id);
@@ -151,18 +184,8 @@ export default function ProductForm() {
             <div className="d-flex justify-content-between align-items-center mb-4">
                 <h2 className="content-title">{id ? "Modifier produit" : "Ajouter produit"}</h2>
                 <div>
-                    <button
-                        className="btn btn-light me-2"
-                        onClick={() => handleSubmit("draft")}
-                    >
-                        Enregistrer en brouillon
-                    </button>
-                    <button
-                        className="btn btn-primary"
-                        onClick={() => handleSubmit("published")}
-                    >
-                        Publier
-                    </button>
+                    <button className="btn btn-light me-2" onClick={() => handleSubmit("draft")}>Enregistrer en brouillon</button>
+                    <button className="btn btn-primary" onClick={() => handleSubmit("published")}>Publier</button>
                 </div>
             </div>
 
@@ -175,65 +198,35 @@ export default function ProductForm() {
                         <div className="card-body">
                             <div className="mb-3">
                                 <label className="form-label">Nom du produit</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={product.name}
-                                    onChange={(e) => setProduct({ ...product, name: e.target.value })}
-                                />
+                                <input type="text" className="form-control" value={product.name} onChange={e => setProduct({ ...product, name: e.target.value })} />
                             </div>
 
                             <div className="mb-3">
                                 <label className="form-label">Description courte</label>
-                                <textarea
-                                    className="form-control"
-                                    rows={2}
-                                    value={product.short_description}
-                                    onChange={(e) =>
-                                        setProduct({ ...product, short_description: e.target.value })
-                                    }
-                                />
+                                <textarea className="form-control" rows={2} value={product.short_description} onChange={e => setProduct({ ...product, short_description: e.target.value })} />
                             </div>
 
                             <div className="mb-3">
                                 <label className="form-label">Description complète</label>
-                                <textarea
-                                    className="form-control"
-                                    rows={4}
+                                <RichTextEditor
                                     value={product.description}
-                                    onChange={(e) =>
-                                        setProduct({ ...product, description: e.target.value })
-                                    }
+                                    onChange={(value: string) => setProduct({ ...product, description: value })}
+                                    placeholder="Write your product description..."
                                 />
                             </div>
 
                             <div className="row">
                                 <div className="col-md-4 mb-3">
                                     <label className="form-label">Prix régulier</label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        value={product.price}
-                                        onChange={(e) => setProduct({ ...product, price: e.target.value })}
-                                    />
+                                    <input type="text" className="form-control" value={product.price} onChange={e => setProduct({ ...product, price: e.target.value })} />
                                 </div>
                                 <div className="col-md-4 mb-3">
                                     <label className="form-label">Prix soldé</label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        value={product.sale_price}
-                                        onChange={(e) => setProduct({ ...product, sale_price: e.target.value })}
-                                    />
+                                    <input type="text" className="form-control" value={product.sale_price} onChange={e => setProduct({ ...product, sale_price: e.target.value })} />
                                 </div>
                                 <div className="col-md-4 mb-3">
                                     <label className="form-label">SKU</label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        value={product.sku}
-                                        onChange={(e) => setProduct({ ...product, sku: e.target.value })}
-                                    />
+                                    <input type="text" className="form-control" value={product.sku} onChange={e => setProduct({ ...product, sku: e.target.value })} />
                                 </div>
                             </div>
                         </div>
@@ -244,38 +237,28 @@ export default function ProductForm() {
                         <div className="card-header"><h4>Shipping</h4></div>
                         <div className="card-body">
                             <div className="row">
-                                <div className="col-md-3 mb-3">
-                                    <label>Longueur</label>
-                                    <input
-                                        className="form-control"
-                                        value={product.length}
-                                        onChange={(e) => setProduct({ ...product, length: e.target.value })}
-                                    />
-                                </div>
-                                <div className="col-md-3 mb-3">
-                                    <label>Largeur</label>
-                                    <input
-                                        className="form-control"
-                                        value={product.wide}
-                                        onChange={(e) => setProduct({ ...product, wide: e.target.value })}
-                                    />
-                                </div>
-                                <div className="col-md-3 mb-3">
-                                    <label>Hauteur</label>
-                                    <input
-                                        className="form-control"
-                                        value={product.height}
-                                        onChange={(e) => setProduct({ ...product, height: e.target.value })}
-                                    />
-                                </div>
-                                <div className="col-md-3 mb-3">
-                                    <label>Poids</label>
-                                    <input
-                                        className="form-control"
-                                        value={product.weight}
-                                        onChange={(e) => setProduct({ ...product, weight: e.target.value })}
-                                    />
-                                </div>
+                                {["length", "wide", "height", "weight"].map((key, i) => (
+                                    <div className="col-md-3 mb-3" key={i}>
+                                        <label className="form-label">
+                                            {key.charAt(0).toUpperCase() + key.slice(1)}
+                                        </label>
+                                        <input
+                                            type="number"
+                                            className="form-control"
+                                            value={
+                                                product[key as keyof Product] !== null && product[key as keyof Product] !== undefined
+                                                    ? String(product[key as keyof Product])
+                                                    : ""
+                                            }
+                                            onChange={e =>
+                                                setProduct({
+                                                    ...product,
+                                                    [key]: e.target.value === "" ? null : Number(e.target.value),
+                                                })
+                                            }
+                                        />
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>
@@ -289,32 +272,18 @@ export default function ProductForm() {
                         <div className="card-body">
                             <div className="mb-3">
                                 <label>Catégorie</label>
-                                <select
-                                    className="form-select"
-                                    value={product.category_id}
-                                    onChange={(e) => handleCategoryChange(Number(e.target.value))}
-                                >
+                                <select className="form-select" value={product.category_id} onChange={e => handleCategoryChange(Number(e.target.value))}>
                                     <option value="">-- Sélectionner catégorie --</option>
-                                    {categories.map(cat => (
-                                        <option key={cat.id} value={cat.id}>{cat.name}</option>
-                                    ))}
+                                    {categories.map(cat => <option key={cat.id} value={cat.id}>{cat.name}</option>)}
                                 </select>
                             </div>
 
                             {subCategories.length > 0 && (
                                 <div className="mb-3">
                                     <label>Sous-catégorie</label>
-                                    <select
-                                        className="form-select"
-                                        value={product.sub_category_id}
-                                        onChange={(e) =>
-                                            setProduct({ ...product, sub_category_id: Number(e.target.value) })
-                                        }
-                                    >
+                                    <select className="form-select" value={product.sub_category_id} onChange={e => setProduct({ ...product, sub_category_id: Number(e.target.value) })}>
                                         <option value="">-- Sélectionner sous-catégorie --</option>
-                                        {subCategories.map(sub => (
-                                            <option key={sub.id} value={sub.id}>{sub.name}</option>
-                                        ))}
+                                        {subCategories.map(sub => <option key={sub.id} value={sub.id}>{sub.name}</option>)}
                                     </select>
                                 </div>
                             )}
@@ -333,37 +302,57 @@ export default function ProductForm() {
                                         checked={product.attributes.includes(attr.id)}
                                         onChange={() => toggleAttribute(attr.id)}
                                     />
-                                    <span className="form-check-label">
-                    {attr.attribute_set.title} - {attr.title}
-                  </span>
+                                    <span className="form-check-label">{attr.attribute_set.title} - {attr.title}</span>
                                 </label>
                             ))}
                         </div>
                     </div>
 
-                    {/* Media */}
-                {/*    <MediaCard
-                        selectedImages={product.gallery}
-                        onChange={(images: Image[]) => {
-                            setProduct({ ...product, gallery: images, image_id: images[0]?.id || null });
-                        }}
-                    />*/}
-                    <MediaCard
-                        selectedImages={product.gallery}
-                        onChange={(images: Image[] | null) => {
-                            if (images) {
-                                setProduct({
-                                    ...product,
-                                    gallery: images,
-                                    image_id: images[0]?.id || null,
-                                    //  names: images.map(img => img.name || ""), // fallback si name manquant
-                                });
-                            }
-                        }}
+                    {/* Images */}
+                    <div className="card mb-4">
+                        <div className="card-header"><h4>Images</h4></div>
+                        <div className="card-body">
+                            <ImageMediaCard
+                                multiple={true}
+                                value={[]}
+                                onChange={(images: Image | Image[] | null) => {
+                                    const imagesArray = Array.isArray(images)
+                                        ? images
+                                        : images
+                                            ? [images] // si c’est un seul objet, on le met dans un tableau
+                                            : [];      // si null ou undefined, tableau vide
 
-                    />
+                                    setProduct({
+                                        ...product,
+                                        gallery: imagesArray.map(img => img.id),
+                                        image_id: imagesArray[0]?.id || null,
+                                    });
+                                }}
+                            />
+                    {/*        <ImageMediaCard
+                                multiple={true}
+                                value={product.images}
+                                onChange={(images: Image[] | null) => {
+                                    if (images) {
+                                        setProduct({
+                                            ...product,
+                                            gallery: images?.map(img => img.id),
+                                            image_id: images[0]?.id || null,
+                                        });
+                                    } else {
+                                        setProduct({
+                                            ...product,
+                                            gallery: [],
+                                            image_id: null,
+                                        });
+                                    }
+                                }}
+                            />*/}
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
     );
 }
+

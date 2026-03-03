@@ -14,10 +14,6 @@ type Props = {
 };
 
 export default function ProductCardTop({ product }: Props) {
-    const addWishlist = useWishlistStore((s) => s.addItem);
-    const addCart = useCartStore((s) => s.addItem);
-    const openModal = useQuickViewStore((s) => s.openModal);
-
     return (
         <div className="col-lg-4 col-md-6 col-sm-12 mb-30">
             <div className="card-grid-style-2">
@@ -53,7 +49,7 @@ export default function ProductCardTop({ product }: Props) {
 
                     <div className="price-info">
                         <strong className="font-lg-bold color-brand-3 price-main">
-                            ${product.price ?? 0} FCFA
+                            {product.price ?? 0} FCFA
                         </strong>
                         {product.sale_price && (
                             <span className="color-gray-500 price-line">

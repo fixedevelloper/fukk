@@ -9,9 +9,9 @@ import {CallToAction2} from "../components/CallToAction2";
 
 import ProductTops from "../components/ProductTop";
 import Link from "next/link";
-import {BannerBox, Category} from "../components/BannerBox";
+import {BannerBox} from "../components/BannerBox";
 import { Suspense } from "react";
-import {ResponsePaginate, Slider} from "../../types/FrontType";
+import {Category, ResponsePaginate, Slider} from "../../types/FrontType";
 
 import type { Metadata } from "next";
 export const dynamic = "force-dynamic";
@@ -82,12 +82,16 @@ async function getSliders(): Promise<ResponsePaginate<Slider> | null> {
 
 
 async function getBannerCategories(): Promise<Category[]> {
-  const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/categories/banners`,
-  );
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/categories/banners`);
 
-  if (!res.ok) return [];
-  return res.json();
+    if (!res.ok) return [];
+    const data: { data: Category[] } = await res.json(); // On attend la réponse JSON
+    return data.data || [];
+  } catch (err) {
+    console.error("Erreur lors de la récupération des catégories :", err);
+    return [];
+  }
 }
 export default async function Home() {
   const slidersResponse = await getSliders();
@@ -144,7 +148,7 @@ export default async function Home() {
         </section>
         <BrandSlider/>
         <BannerBox categories={bannerCategories}/>
-        <section className="section-box mt-30">
+        <section className="section-box mt-10">
           <div className="container">
 
             <ProductTabs/>

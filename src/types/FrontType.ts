@@ -25,6 +25,8 @@ export type Product = {
     related_products?: Product[]
     mostRating?: Product[]
     recentViewsproducts?: Product[]
+    attributes?:Attribute[]
+    variations?:Variation []
     // ================= IMAGES =================
     image?: Image // image principale
     images?: Image[] // galerie
@@ -339,4 +341,18 @@ export type ShippingMethod = {
     city_id: number | null;
     is_free: boolean;
     active: boolean;
+};
+export type VariationAttribute = {
+    attribute_id: number;
+    attribute_name: string;
+    value_id: number;
+    value_name: string;
+};
+
+export type Variation = {
+    id: number;
+    attributes: VariationAttribute[];
+    price: number;
+    stock: number;
+    sku: string;
 };

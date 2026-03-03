@@ -6,6 +6,7 @@ import {CategoryMediaCard} from "../../../components/CategoryMediaCard";
 import {Image} from "../../../../../types/FrontType";
 import axiosServices from "../../../../../lib/axios";
 import {enqueueSnackbar} from "notistack";
+import ImageMediaCard from "../../../components/ImageModal";
 
 export default function EditSliderPage() {
     const { id } = useParams();
@@ -148,9 +149,10 @@ export default function EditSliderPage() {
 
                 <div className="mb-4">
                     <label className="form-label">Image</label>
-                    <CategoryMediaCard
-                        selectedImage={image ?? undefined}
-                        onChange={setImage}
+                    <ImageMediaCard
+                        multiple={false}
+                        value={image}
+                        onChange={(img) => setImage(img as Image)}
                     />
                 </div>
 

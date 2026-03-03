@@ -41,3 +41,99 @@
     width: 100%;
     transition: 0.2s;
 }
+.variation-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+}
+
+.variation-title {
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.variation-label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.variation-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.variation-btn {
+    border: 1px solid #ddd;
+    padding: 8px 16px;
+    border-radius: 50px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.variation-btn:hover {
+    border-color: black;
+}
+
+.variation-btn.active {
+    background: black;
+    color: white;
+    border-color: black;
+}
+
+.variation-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.variation-info {
+    margin-top: 20px;
+}
+
+.variation-price {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.variation-stock {
+    margin-top: 6px;
+    font-weight: 600;
+}
+
+.in-stock {
+    color: #198754;
+}
+
+.out-stock {
+    color: #dc3545;
+}
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.hover-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+.hover-card .image-box img {
+    transition: transform 0.3s ease;
+}
+.hover-card:hover .image-box img {
+    transform: scale(1.05);
+}

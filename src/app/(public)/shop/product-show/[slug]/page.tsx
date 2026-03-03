@@ -11,11 +11,7 @@ async function getProductBySlug(slug: string): Promise<Product | null> {
 }
 
 // Fonction pour générer le metadata dynamique
-export async function generateMetadata({
-                                           params,
-                                       }: {
-    params: Promise<{ slug: string }>;
-}) {
+export async function generateMetadata({ params}: { params: Promise<{ slug: string }>;}) {
     const { slug } = await params;
     const product = await getProductBySlug(slug);
     if (!product) {

@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import axiosServices from "../../../../lib/axios";
 import { useCheckoutStore } from "../../../../store/useCheckoutStore";
 
 interface CheckoutAccordionProps {
@@ -29,38 +28,113 @@ export function CheckoutAccordion({
 
     // Charger les villes
     useEffect(() => {
-        axiosServices.get("/api/app-cities").then((res) => setCities(res.data.data));
+        const fetchCities = async () => {
+            try {
+                const response = await fetch(
+                    `${process.env.NEXT_PUBLIC_API_URL}/api/app-cities`
+                );
+
+                if (!response.ok) {
+                    throw new Error("Erreur lors du chargement des villes");
+                }
+
+                const data = await response.json();
+                setCities(data.data);
+            } catch (error) {
+                console.error("Erreur:", error);
+            }
+        };
+
+        fetchCities();
     }, []);
+
+
 
     // Charger les zones quand ville change
     useEffect(() => {
         if (!cityId) return;
 
-        axiosServices.get(`/api/zones/by-city?city_id=${cityId}`)
-            .then((res) => setZones(res.data.data));
+        const controller = new AbortController();
 
-        // Reset zone et shipping
+        const fetchZones = async () => {
+            try {
+                const response = await fetch(
+                    `${process.env.NEXT_PUBLIC_API_URL}/api/zones/by-city?city_id=${cityId}`,
+                    { signal: controller.signal }
+                );
+
+                if (!response.ok) {
+                    throw new Error("Erreur lors du chargement des zones");
+                }
+
+                const data = await response.json();
+                setZones(data.data);
+            } catch (error: any) {
+                if (error.name !== "AbortError") {
+                    console.error(error);
+                }
+            }
+        };
+
+        fetchZones();
+
         setForm((prev: any) => ({
             ...prev,
             zone_id: "",
             shipping_method: "",
             shipping_price: 0,
         }));
+
+        return () => controller.abort();
+
     }, [cityId]);
+
 
     // Charger shipping methods
     useEffect(() => {
         if (!cityId || !form.zone_id) return;
 
-        setShippingLoading(true);
-        axiosServices
-            .post("/api/shipping-methods/by-city", {
-                city_id: cityId,
-                zone_id: form.zone_id,
-            })
-            .then((res) => setShippingMethods(res.data.data))
-            .finally(() => setShippingLoading(false));
+        const controller = new AbortController();
+
+        const fetchShippingMethods = async () => {
+            try {
+                setShippingLoading(true);
+
+                const response = await fetch(
+                    `${process.env.NEXT_PUBLIC_API_URL}/api/shipping-methods/by-city`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            city_id: cityId,
+                            zone_id: form.zone_id,
+                        }),
+                        signal: controller.signal,
+                    }
+                );
+
+                if (!response.ok) {
+                    throw new Error("Erreur lors du chargement");
+                }
+
+                const data = await response.json();
+                setShippingMethods(data.data);
+            } catch (error: any) {
+                if (error.name !== "AbortError") {
+                    console.error(error);
+                }
+            } finally {
+                setShippingLoading(false);
+            }
+        };
+
+        fetchShippingMethods();
+
+        return () => controller.abort();
     }, [cityId, form.zone_id]);
+
 
     const toggleSection = (section: string) =>
         setOpenSection((prev) => (prev === section ? "" : section));

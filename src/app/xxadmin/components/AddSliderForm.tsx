@@ -5,6 +5,7 @@ import {CategoryMediaCard} from "./CategoryMediaCard";
 import {Image} from "../../../types/FrontType";
 import axiosServices from "../../../lib/axios";
 import {enqueueSnackbar} from "notistack";
+import ImageMediaCard from "./ImageModal";
 
 export default function AddSliderForm() {
     const [title, setTitle] = useState("");
@@ -114,12 +115,15 @@ export default function AddSliderForm() {
                     />
                 </div>
 
+
                 <div className="mb-4">
                     <label className="form-label">Image</label>
-                    <CategoryMediaCard
-                        selectedImage={image ?? undefined}
-                        onChange={(img: Image | null) => setImage(img)}
+                    <ImageMediaCard
+                        multiple={false}
+                        value={image}
+                        onChange={(img) => setImage(img as Image)}
                     />
+
                 </div>
 
                 <div className="form-check mb-4">

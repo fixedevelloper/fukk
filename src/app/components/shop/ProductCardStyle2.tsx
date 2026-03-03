@@ -1,9 +1,6 @@
 "use client";
 
-import { useWishlistStore } from "@/store/wishlistStore";
-import { useCartStore } from "@/store/cartStore";
 import React from "react";
-import {useQuickViewStore} from "../../../store/useQuickViewStore";
 import Link from "next/link";
 import Image from "next/image";
 import {Product} from "../../../types/FrontType";
@@ -14,10 +11,6 @@ type Props = {
 };
 
 export default function ProductCardStyle2({ product }: Props) {
-    const addWishlist = useWishlistStore((s) => s.addItem);
-    const addCart = useCartStore((s) => s.addItem);
-    const openModal = useQuickViewStore((s) => s.openModal);
-
 
     return (
         <div

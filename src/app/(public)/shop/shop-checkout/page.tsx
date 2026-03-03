@@ -5,11 +5,14 @@ import { useSession } from "next-auth/react";
 import { useCheckoutStore } from "../../../../store/useCheckoutStore";
 import {useCartStore} from "../../../../store/cartStore";
 import {CheckoutAccordion} from "./CheckoutAccordion";
+import {router} from "next/client";
+import {useRouter} from "next/navigation";
+import {enqueueSnackbar} from "notistack";
 
 export default function CheckoutPage() {
     const { items, clearCart } = useCartStore();
     const { selectedShipping, clearCheckout } = useCheckoutStore();
-
+    const router = useRouter();
     const { data: session, status } = useSession();
     const isAuthenticated = status === "authenticated";
 
@@ -38,6 +41,7 @@ export default function CheckoutPage() {
     const total = subtotal + shippingPrice;
 
     // Placer la commande
+
     const placeOrder = async () => {
         if (!isAuthenticated || items.length === 0) return;
 
@@ -72,7 +76,7 @@ export default function CheckoutPage() {
                             note: form.note,
                         },
                         payment_method: form.payment_method,
-                        mobile_number:form.mobile_number
+                        mobile_number: form.mobile_number,
                     }),
                 }
             );
@@ -82,11 +86,27 @@ export default function CheckoutPage() {
                 throw new Error(error.message || "Erreur lors de la commande");
             }
 
+            // Commande réussie
             clearCart();
             clearCheckout();
-            alert("✅ Commande passée avec succès !");
+
+            enqueueSnackbar("✅ Commande passée avec succès !", {
+                variant: "success",
+                autoHideDuration: 3000,
+                anchorOrigin: { vertical: "top", horizontal: "right" },
+            });
+
+            // Redirige vers la page compte après 2 secondes
+            setTimeout(() => {
+                router.push("/account");
+            }, 2000);
+
         } catch (error: any) {
-            alert(error.message || "Impossible de passer la commande");
+            enqueueSnackbar(error.message || "Impossible de passer la commande", {
+                variant: "error",
+                autoHideDuration: 4000,
+                anchorOrigin: { vertical: "top", horizontal: "right" },
+            });
         } finally {
             setLoading(false);
         }
@@ -96,6 +116,9 @@ export default function CheckoutPage() {
         return <p className="text-center mt-50">Chargement de la session...</p>;
     }
 
+    if (!session) {
+        router.push(`/auth/login?redirect=${window.location.pathname}`);
+    }
     return (
         <>
             {/* Fil d’Ariane */}
