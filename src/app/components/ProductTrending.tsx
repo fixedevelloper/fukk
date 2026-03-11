@@ -10,6 +10,7 @@ import "swiper/css/grid"
 import {Product, ResponsePaginate} from "../../types/FrontType";
 import ProductCardTab from "./shop/ProductCardTab";
 import ProductCardStyle2 from "./shop/ProductCardStyle2";
+import Link from "next/link";
 
 export default function ProductTrending() {
     const mainPrevRef = useRef<HTMLDivElement>(null)
@@ -96,7 +97,9 @@ export default function ProductTrending() {
                                 </SwiperSlide>
                             ))}
                         </Swiper>
-                        <div className="mt-20"><a href="shop-single-product.html"><img src="images/homepage4/banner-ads.png" alt="FinduKarko"/></a></div>
+                        <div className="mt-20">
+                            <Link href="/"><img src="images/homepage4/banner-ads.png" alt="FinduKarko"/></Link>
+                        </div>
                         <div className="box-content mt-45">
                             <div className="head-main bd-gray-200">
                                 <div className="row">

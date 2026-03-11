@@ -51,12 +51,12 @@ export function ProductDescription({ product }: Props) {
 
                     <ul className="contact-infor mb-50">
                         <li>
-                            <img src="assets/imgs/page/product/icon-location.svg" alt="Adresse" />
+                            <img src="/images/page/shop/icon-location.svg" alt="Adresse" />
                             <strong>Adresse :</strong>
                             <span> {product.store?.address}</span>
                         </li>
                         <li>
-                            <img src="assets/imgs/page/product/icon-contact.svg" alt="Contact" />
+                            <img src="/images/page/shop/icon-contact.svg" alt="Contact" />
                             <strong>Contact vendeur :</strong>
                             <span> {product.store?.phone}</span>
                         </li>

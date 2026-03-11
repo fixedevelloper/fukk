@@ -59,7 +59,7 @@ export default function ProductCardTab({ product }: Props) {
                 <div className="info-right">
                     <a className="font-xs color-gray-500" href="#">Marque</a>
                     <br />
-                    <a className="color-brand-3 font-sm-bold" href="#">{product.name}</a>
+                    <a className="color-brand-3 font-sm-bold" href="#">{product.brand?.name}</a>
                     <div className="rating">
                         {[...Array(5)].map((_, i) => (
                             <img key={i} src="/images/template/icons/star.svg" alt="étoile" />
@@ -80,11 +80,11 @@ export default function ProductCardTab({ product }: Props) {
                         </button>
                     </div>
 
-                    <ul className="list-features">
+                   {/* <ul className="list-features">
                         <li>Écran Retina 5K de 27 pouces (diagonal)</li>
                         <li>Processeur Intel Core i5 10ᵉ génération 6 cœurs à 3,1 GHz</li>
                         <li>Carte graphique AMD Radeon Pro 5300</li>
-                    </ul>
+                    </ul>*/}
                 </div>
             </div>
         </div>

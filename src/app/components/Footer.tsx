@@ -35,12 +35,10 @@ export default function Footer() {
                         <div className="col-lg-3 width-20 mb-30">
                             <h4 className="mb-30 color-gray-1000">Gagnez de l'argent avec nous</h4>
                             <ul className="menu-footer">
-                                <li><a href="page-about-us.html">Mission & Vision</a></li>
-                                <li><a href="page-about-us.html">Notre équipe</a></li>
-                                <li><a href="page-careers.html">Carrières</a></li>
-                                <li><a href="#">Presse & Médias</a></li>
-                                <li><a href="#">Publicité</a></li>
-                                <li><a href="#">Témoignages</a></li>
+                                <li><Link href="contact">Mission & Vision</Link></li>
+                                <li><Link href="/">Comment devenir vendeur</Link></li>
+                                <li><Link href="/">Ouvrir la boutique</Link></li>
+                                <li><Link href="/">Témoignages</Link></li>
                             </ul>
                         </div>
 
@@ -48,12 +46,10 @@ export default function Footer() {
                         <div className="col-lg-3 width-16 mb-30">
                             <h4 className="mb-30 color-gray-1000">Entreprise</h4>
                             <ul className="menu-footer">
-                                <li><Link href="blog">Notre blog</Link></li>
-                                <li><Link href="#">Plans & Tarifs</Link></li>
-                                <li><Link href="#">Base de connaissances</Link></li>
-                                <li><Link href="#">Politique de cookies</Link></li>
-                                <li><Link href="#">Centre d'affaires</Link></li>
-                                <li><Link href="blog.html">Actualités & Événements</Link></li>
+                                <li><Link href="/">Conditions générales de vente</Link></li>
+                                <li><Link href="/">Retour & Remboursement</Link></li>
+                                <li><Link href="/">Politique de cookies</Link></li>
+                                <li><Link href="/">Actualités & Événements</Link></li>
                             </ul>
                         </div>
 
@@ -63,10 +59,9 @@ export default function Footer() {
                             <ul className="menu-footer">
                                 <li><Link href="#">FAQs</Link></li>
                                 <li><Link href="#">Aide de l’éditeur</Link></li>
-                                <li><Link href="#">Communauté</Link></li>
                                 <li><Link href="#">Chat en direct</Link></li>
                                 <li><Link href="/contact-us">Nous contacter</Link></li>
-                                <li><a href="#">Centre de support</a></li>
+                                <li><Link href="#">Centre de support</Link></li>
                             </ul>
                         </div>
 

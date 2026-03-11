@@ -39,7 +39,7 @@ export default function HomeSlider({sliders}: { sliders: Slider[] }) {
                                     <div className="row">
                                         <div className="col-lg-7 d-flex flex-column justify-content-center">
                                             {/* TITRE */}
-                                            <h3 className="color-gray-100 text-uppercase text-start">
+                                        {/*    <h3 className="color-gray-100 text-uppercase text-start">
                                                 {slide.title.split("\n").map((line, i) => (
                                                     <span key={i}>
                 {line}
@@ -48,14 +48,14 @@ export default function HomeSlider({sliders}: { sliders: Slider[] }) {
                                                 ))}
                                             </h3>
 
-                                            {/* DESCRIPTION */}
+                                             DESCRIPTION
                                             <div className="mt-3">
                                                 <ul className="list-disc text-start">
                                                     {slide.description}
                                                 </ul>
                                             </div>
 
-                                            {/* BOUTON */}
+                                             BOUTON
                                             <div className="mt-4 text-start">
                                                 <Link
                                                     className="btn btn-brand-2 btn-gray-1000"
@@ -63,7 +63,7 @@ export default function HomeSlider({sliders}: { sliders: Slider[] }) {
                                                 >
                                                     {slide.btn_text}
                                                 </Link>
-                                            </div>
+                                            </div>*/}
                                         </div>
                                     </div>
                                 </div>

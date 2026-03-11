@@ -79,7 +79,9 @@ export default function BannerListPage() {
                             <th>#</th>
                             <th>Image</th>
                             <th>Titre</th>
+                            <th>placement</th>
                             <th>Actif</th>
+
                             <th>Actions</th>
                         </tr>
                         </thead>
@@ -94,6 +96,7 @@ export default function BannerListPage() {
                                     />
                                 </td>
                                 <td>{banner.title}</td>
+                                <td>{banner.placement}</td>
                                 <td>
                                     <input
                                         type="checkbox"

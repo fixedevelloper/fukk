@@ -16,6 +16,7 @@ type Attribute = { id: number; title: string; attribute_set: { id: number; title
 interface Product {
     id?: number;
     name: string;
+    type: string;
     slug: string;
     short_description: string;
     description: string;
@@ -40,6 +41,7 @@ interface Product {
     image_id: number | null;
     gallery:number[];
     images:number[];
+    variations:number[]
 }
 
 
@@ -48,6 +50,7 @@ export default function ProductForm() {
     const router = useRouter();
 
     const [product, setProduct] = useState<Product>({
+        type: "",
         name: "",
         slug: "",
         short_description: "",
@@ -72,7 +75,8 @@ export default function ProductForm() {
         attributes: [],
         image_id: null,
         gallery: [] as number[],
-        images: []
+        images: [],
+        variations: [],
     });
 
     const [categories, setCategories] = useState<Category[]>([]);
@@ -104,6 +108,7 @@ export default function ProductForm() {
                     })) || [];
 
                     setProduct({
+                        type: prod.type || "",
                         name: prod.name || "",
                         slug: prod.slug || "",
                         short_description: prod.short_description || "",
@@ -128,7 +133,8 @@ export default function ProductForm() {
                         attributes: prod.attributes?.map((a: any) => a.id) || [],
                         image_id: prod.image_id || null,
                         gallery: [] as number[],
-                        images:prod.images
+                        images:prod.images,
+                        variations:[]
                     });
 
                     const parent = catRes.data.data.find((c: any) => c.id === prod.category_id);

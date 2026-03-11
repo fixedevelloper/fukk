@@ -70,7 +70,7 @@ export default function ProductGallery({ images = [] }: Props) {
                 className="slider-nav-thumbnails mt-3"
                 direction="vertical"
                 loop
-                style={{ height: "400px" }}
+                //style={{ height: "400px" }}
                 freeMode
             >
                 {images.map((img) => (

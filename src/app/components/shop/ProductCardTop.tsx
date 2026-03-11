@@ -1,10 +1,7 @@
 "use client";
 
 import Image from "next/image"
-import { useWishlistStore } from "@/store/wishlistStore";
-import { useCartStore } from "@/store/cartStore";
 import React from "react";
-import {useQuickViewStore} from "../../../store/useQuickViewStore";
 import Link from "next/link";
 import {Product} from "../../../types/FrontType";
 

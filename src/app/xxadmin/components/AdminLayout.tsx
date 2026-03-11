@@ -189,7 +189,7 @@ export default function AdminLayout({
             >
                 <div className="aside-top d-flex justify-content-between align-items-center p-3">
                     <Link href="/xxadmin" className="brand-wrap">
-                        <img className="logo" src="/images/theme/logo.svg" alt="Dashboard Logo" />
+                        <img className="logo" src="/images/theme/logo.webp" alt="Dashboard Logo" />
                     </Link>
 
                     <button

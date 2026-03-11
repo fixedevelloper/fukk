@@ -1,12 +1,13 @@
 import React from "react";
+import Link from "next/link";
 
 export function CallToAction() {
     return (
-        <section className="section-box pt-50">
+       /* <section className="section-box pt-50">
             <div className="container">
                 <div className="row">
 
-                    {/* iPhone */}
+                    {/!* iPhone *!/}
                     <div className="col-xl-3 col-lg-5 col-md-5 col-sm-12 mb-30">
                         <div className="bg-5 block-iphone" style={{
                             backgroundImage: `url(/images/homepage4/iphone-12.png)`,
@@ -23,7 +24,7 @@ export function CallToAction() {
                         </div>
                     </div>
 
-                    {/* Samsung TV */}
+                    {/!* Samsung TV *!/}
                     <div className="col-xl-4 col-lg-7 col-md-7 col-sm-12 mb-30">
                         <div className="bg-4 block-samsung" style={{
                             backgroundImage: `url(/images/homepage4/samsung-tv.png)`,
@@ -40,7 +41,7 @@ export function CallToAction() {
                         </div>
                     </div>
 
-                    {/* Drone */}
+                    {/!* Drone *!/}
                     <div className="col-xl-5 col-lg-12 col-md-12 col-sm-12">
                         <div className="bg-6 block-drone" style={{
                             backgroundImage: `url(/images/homepage4/drone.png)`,
@@ -58,8 +59,31 @@ export function CallToAction() {
 
                 </div>
             </div>
-        </section>
-
+        </section>*/
+        <div className="section-box mt-50">
+            <div className="container">
+                <div className="row">
+                    <div className="col-lg-6 wow animate__ animate__fadeInUp animated"
+                         style={{
+                             visibility: "visible",
+                             animationDelay: "0s",
+                             animationName: "fadeInUp"
+                         }}
+                        >
+                        <Link href="/"><img className="w-100 hover-up" src="/images/homepage4/calltoaction/ads2.png" alt="Ecom"/>
+                        </Link>
+                    </div>
+                    <div className="col-lg-6 wow animate__ animate__fadeInUp animated"
+                         style={{
+                             visibility: "visible",
+                             animationDelay: "0s",
+                             animationName: "fadeInUp"
+                         }}>
+                        <Link href="/"><img className="w-100 hover-up" src="/images/homepage4/calltoaction/ads3.png" alt="Ecom"/>
+                        </Link></div>
+                </div>
+            </div>
+        </div>
     )
 
 }

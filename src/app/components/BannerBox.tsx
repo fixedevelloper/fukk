@@ -1,5 +1,4 @@
 import Link from "next/link"
-import Image from "next/image"
 import React from "react"
 import {Category} from "../../types/FrontType";
 
@@ -11,12 +10,12 @@ export function BannerBox({ categories = [] }: BannerBoxProps) {
     return (
         <div className="section-box py-40">
             <div className="container">
-                <div className="row g-4">
+        {/*    <div className="row g-4">
                     {categories?.map((cat: Category) => (
                         <div key={cat.id} className="col-xl-3 col-lg-4 col-md-6 col-sm-12">
                             <div className="card-banner hover-card shadow-sm rounded overflow-hidden transition-all">
 
-                                {/* IMAGE */}
+                                 IMAGE
                                 <div className="image-box position-relative text-center p-20 bg-light">
                                     <Link href={`/shop?category=${cat.slug}`}>
                                         {cat.image?.thumb ? (
@@ -45,7 +44,7 @@ export function BannerBox({ categories = [] }: BannerBoxProps) {
                                     </div>
                                 </div>
 
-                                {/* INFOS */}
+                                 INFOS
                                 <div className="info-right p-3 text-center">
                                     <Link className="color-brand-3 font-sm-bold" href={`/shop?category=${cat.slug}`}>
                                         <h6 className="mb-1">{cat.name}</h6>
@@ -62,7 +61,26 @@ export function BannerBox({ categories = [] }: BannerBoxProps) {
                             </div>
                         </div>
                     ))}
-                </div>
+            </div>*/}
+                <ul className="list-9-col mt-15">
+                    {categories?.map((cat: Category) => (
+                    <li className="wow animate__ animate__fadeIn animated"
+                        style={{
+                            visibility: "visible",
+                            animationDelay: "0s",
+                            animationName: "fadeIn"
+                        }}>
+                        <div className="box-category hover-up">
+                            <div className="image">
+                                <Link href={`/shop?category=${cat.slug}`}>
+                                <img src={cat.image?.thumb} alt={cat.name}/></Link></div>
+                            <div className="text-info">
+                                <Link className="font-sm color-gray-900 font-bold" href={`/shop?category=${cat.slug}`}>{cat.name}</Link>
+                                <p className="font-xs color-gray-500">{cat.products_count} items</p>
+                            </div>
+                        </div>
+                    </li>))}
+                </ul>
             </div>
 
         </div>

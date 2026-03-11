@@ -3,11 +3,11 @@ import React from "react";
 export function CallToAction2() {
 
     return (
-        <section className="section-box pt-50">
+      /*  <section className="section-box pt-50">
             <div className="container">
                 <div className="row">
 
-                    {/* Power Bank */}
+                    {/!* Power Bank *!/}
                     <div className="col-xl-4 col-lg-7 col-md-7 col-sm-12 mb-30">
                         <div
                             className="bg-4 block-charge"
@@ -36,7 +36,7 @@ export function CallToAction2() {
                         </div>
                     </div>
 
-                    {/* Manette PS5 */}
+                    {/!* Manette PS5 *!/}
                     <div className="col-xl-5 col-lg-12 col-md-12 col-sm-12 mb-30">
                         <div
                             className="bg-6 block-player"
@@ -63,7 +63,7 @@ export function CallToAction2() {
                         </div>
                     </div>
 
-                    {/* iPhone */}
+                    {/!* iPhone *!/}
                     <div className="col-xl-3 col-lg-5 col-md-5 col-sm-12 mb-30">
                         <div
                             className="bg-5 block-iphone"
@@ -93,8 +93,29 @@ export function CallToAction2() {
 
                 </div>
             </div>
-        </section>
-
+        </section>*/
+        <div className="section-box mt-50">
+            <div className="container">
+                <div className="row">
+                    <div className="col-lg-1"></div>
+                    <div className="col-lg-5 wow animate__ animate__fadeInUp animated"
+                         style={{
+                             visibility: "visible",
+                             animationDelay: "0s",
+                             animationName: "fadeInUp"
+                         }}
+                    >
+                        <img className="w-100" src="/images/homepage4/calltoaction/ads4.png" alt="Ecom"/></div>
+                    <div className="col-lg-5 wow animate__ animate__fadeInUp animated"
+                         style={{
+                             visibility: "visible",
+                             animationDelay: "0s",
+                             animationName: "fadeInUp"
+                         }}>
+                        <img className="w-100" src="/images/homepage4/calltoaction/ads5.png" alt="Ecom"/></div>
+                </div>
+            </div>
+        </div>
     )
 
 }

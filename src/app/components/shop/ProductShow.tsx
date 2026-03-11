@@ -7,8 +7,6 @@ import ProductGallery from "../slider/ProductGallery";
 import {ProductDescription} from "./ProductDescription";
 import {FrequentlyBoughtTogether} from "./FrequentlyBoughtTogether";
 import HookShippingSelector from "./HookShippingSelector";
-import ProductShopAttributes from "./ProductShopAttributes";
-import ProductVariationsSelector from "./ProductVariationsSelector";
 import {enqueueSnackbar} from "notistack";
 
 

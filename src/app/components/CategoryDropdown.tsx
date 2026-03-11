@@ -49,7 +49,7 @@ export default function CategoryDropdown({ categories }: { categories: Category[
                                     className={activeIndex === idx ? "active" : ""}
                                 >
                             <span className="img-link">
-                                <Image
+                                <img
                                     src={cat.image?.thumb || DEFAULT_CATEGORY_ICON}
                                     alt={cat.name|| "Produit"}
                                     width={24}

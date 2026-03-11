@@ -94,12 +94,14 @@ async function getBannerCategories(): Promise<Category[]> {
   }
 }
 export default async function Home() {
+  const bannerCategories = await getBannerCategories();
   const slidersResponse = await getSliders();
 
   if (!slidersResponse?.data) {
     return null; // ou skeleton loader
   }
-  const bannerCategories = await getBannerCategories();
+  console.log(bannerCategories)
+
   return (
       <div>
         <section className="section-box">
@@ -108,7 +110,7 @@ export default async function Home() {
               <div className="row">
                 <div className="col-xl-7 col-lg-12 col-md-12 mb-30">
                   <Suspense fallback={<div className="h-[400px] bg-gray-100" />}>
-                  <HomeSlider sliders={slidersResponse.data}/>
+                  <HomeSlider sliders={slidersResponse?.data}/>
                   </Suspense>
 
                 </div>

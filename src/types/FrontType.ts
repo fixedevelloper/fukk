@@ -15,7 +15,7 @@ export type Product = {
     allow_checkout_when_out_of_stock?: boolean
     with_storehouse_management?: boolean
     is_featured?: boolean
-    reviews:number
+    reviews:number,
     // ================= RELATIONS =================
     brand?: Brand
     categories?: Category[]
